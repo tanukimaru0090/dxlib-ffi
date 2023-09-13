@@ -13,8 +13,8 @@ dxlib-ffi = {git = "https://github.com/tanukimaru0090/dxlib-ffi.git"}
 
 src/main.rs
 ```Rust
-extern crate dxlib-ffi;
-use dxlib-ffi::dxlib;
+extern crate dxlib_ffi;
+use dxlib_ffi::dxlib;
 
 fn main(){
   unsafe{
