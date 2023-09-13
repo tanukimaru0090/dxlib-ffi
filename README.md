@@ -1,4 +1,4 @@
-# dxlib-ffi
+# dxlib-ffi-rs
 ・DxLibをRust用に呼び出せるようにしたもの
 ・さらにラップされたものを使いたい場合、このライブラリと一緒に "tanukimaru0090/dxlib-rs"を使ってください。
  また、"tanukimaru0090/dxlib-rs"についてはそのリポジトリ内の "README.md" を参照してください。
