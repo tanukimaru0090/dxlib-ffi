@@ -7,8 +7,8 @@
 
 myproject/Cargo.toml
 ```toml
-[dependencies.rust_dxlib]
-git = "https://github.com/tanukimaru0090/dxlib-ffi.git"
+[dependencies]
+dxlib-ffi = {git = "https://github.com/tanukimaru0090/dxlib-ffi.git"}
 ```
 
 src/main.rs
