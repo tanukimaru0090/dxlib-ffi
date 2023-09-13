@@ -35,7 +35,7 @@ fn main(){
 DxLib_x64.dllはDXライブラリの公式サイトのC#版DXライブラリをダウンロードすることで使うことができます。
 
 ## フォークさせてもらった、ライブラリ
-rust_dxlib
+elipmoc/rust_dxlib
 ## License
 MIT License
 
