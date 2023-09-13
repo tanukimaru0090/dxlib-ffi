@@ -19,7 +19,7 @@ use dxlib_ffi::dxlib;
 fn main(){
   unsafe{
       dxlib::dx_DxLib_Init();
-      let mut color = dx_GetColor(255,255,255);
+      let mut color = dxlib::dx_GetColor(255,255,255);
       while dxlib::dx_ProcesMessage() == 0{
           dxlib::dx_DrawString(0,0,"hello world!",color);
           if dxlib::dx_CheckHitKey(KEY_INPUT_ESCAPE) == TRUE{
