@@ -1,4 +1,3 @@
-
 #![allow(non_snake_case)]
 extern crate encoding_rs;
 //extern crate alloc;
@@ -53,8 +52,8 @@ extern "stdcall" {
     pub fn dx_DxLib_End() -> i32;
     /// ウインドウズのメッセージを処理する
     pub fn dx_ProcessMessage() -> i32;
-
-    pub fn dx_SetWindowSizeExtendRate(ExRateX:f64,ExRateY:f64)->i32;
+    pub fn dx_GetGraphSize(GrHandle: i32, SizeXBuf: *mut i32, SizeYBuf: *mut i32) -> i32;
+    pub fn dx_SetWindowSizeExtendRate(ExRateX: f64, ExRateY: f64) -> i32;
     //算術演算関数
     pub fn dx_VGet(x: f32, y: f32, z: f32) -> VECTOR;
 
