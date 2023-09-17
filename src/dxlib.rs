@@ -54,6 +54,7 @@ extern "stdcall" {
     /// ウインドウズのメッセージを処理する
     pub fn dx_ProcessMessage() -> i32;
 
+    pub fn dx_SetWindowSizeExtendRate(ExRateX:f64,ExRateY:f64)->i32;
     //算術演算関数
     pub fn dx_VGet(x: f32, y: f32, z: f32) -> VECTOR;
 
