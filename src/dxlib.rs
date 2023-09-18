@@ -52,6 +52,7 @@ extern "stdcall" {
     pub fn dx_DxLib_End() -> i32;
     /// ウインドウズのメッセージを処理する
     pub fn dx_ProcessMessage() -> i32;
+    pub fn dx_DeleteGraph(GrHandle:i32)->i32;
     pub fn dx_GetGraphSize(GrHandle: i32, SizeXBuf: *mut i32, SizeYBuf: *mut i32) -> i32;
     pub fn dx_SetWindowSizeExtendRate(ExRateX: f64, ExRateY: f64) -> i32;
     //算術演算関数
@@ -419,7 +420,7 @@ extern "stdcall" {
     //pub fn dx_StopJoypadVibration() -> i32;
 
     /// マウスカーソルの表示設定フラグのセット
-    //pub fn dx_SetMouseDispFlag() -> i32;
+    pub fn dx_SetMouseDispFlag(DispFlag:i32) -> i32;
     /// マウスカーソルの位置を取得する
     pub fn dx_GetMousePoint(XBuf: *mut c_int, YBuf: *mut c_int) -> i32;
     /// マウスカーソルの位置をセットする
