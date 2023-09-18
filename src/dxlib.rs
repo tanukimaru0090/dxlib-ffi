@@ -438,17 +438,17 @@ extern "stdcall" {
         RefreshRate: c_int,
     ) -> c_int;
     /// フルスクリーンモード時の解像度モードを設定する
-    pub fn dx_SetFullScreenResolutionMode(ResolutionMode:c_int) -> c_int;
+    pub fn dx_SetFullScreenResolutionMode(ResolutionMode: c_int) -> c_int;
     /// フルスクリーンモード時の画面拡大モードを設定する
-    pub fn dx_SetFullScreenScalingMode(ScalingMode:c_int) -> c_int;
+    pub fn dx_SetFullScreenScalingMode(ScalingMode: c_int) -> c_int;
     /// 現在の画面の大きさとカラービット数を得る
     //pub fn dx_GetScreenState(SizeX:*mut c_int,SizeY:*mut c_int,ColorBitDepth:*mut c_int) -> c_int;
     /// 描画可能領域のセット
-    //pub fn dx_SetDrawArea() -> c_int;
+    pub fn dx_SetDrawArea(x1: i32, y1: i32, x2: i32, y2: i32) -> c_int;
     /// 画面に描かれたものを消去する
     //pub fn dx_ClearDrawScreen() -> c_int;
     /// 画面の背景色を設定する
-    //pub fn dx_SetBackgroundColor() -> c_int;
+    pub fn dx_SetBackgroundColor(Red: i32, Green: i32, Blue: i32) -> c_int;
     /// 色コードを取得する
     pub fn dx_GetColor(Red: c_int, Green: c_int, Blue: c_int) -> Color;
     pub fn dx_GetColorU8(Red: c_int, Green: c_int, Blue: c_int, Alpha: c_int) -> COLOR_U8;
@@ -457,7 +457,7 @@ extern "stdcall" {
     /// フリップ関数、画面の裏ページ(普段は表示されていない)の内容を表ページ(普段表示されている)に反映する
     pub fn dx_ScreenFlip() -> c_int;
     /// 画面のフルスクリーンアンチエイリアスモードの設定をする
-    //pub fn dx_SetFullSceneAntiAliasingMode() -> c_int;
+    pub fn dx_SetFullSceneAntiAliasingMode(Samples: i32, Quality: i32) -> c_int;
 
     // 動画関係関数
 
@@ -1027,7 +1027,12 @@ mod hidden {
             FontHandle: c_int,
         ) -> c_int;
 
-        pub fn dx_GetScreenState(SizeX:*mut c_int,SizeY:*mut c_int,ColorBitDepth:*mut c_int) -> c_int;
+        pub fn dx_GetScreenState(
+            SizeX: *mut c_int,
+            SizeY: *mut c_int,
+            ColorBitDepth: *mut c_int,
+        ) -> c_int;
+        pub fn dx_PlayMovie(FileName: *const c_char, ExRate: c_int, PlayType: c_int) -> c_int;
     }
     #[link(name = "DxLib_x64")]
     #[no_mangle]
@@ -1207,8 +1212,18 @@ pub fn dx_GetFontStateToHandle(
         );
     }
 }
-pub fn dx_GetScreenState(SizeX:&mut c_int,SizeY:&mut c_int,ColorBitDepth:&mut c_int) -> c_int{
-    unsafe{
-        return hidden::dx_GetScreenState(&mut *SizeX as *mut c_int,&mut *SizeY as *mut c_int ,&mut *ColorBitDepth as *mut c_int);
+pub fn dx_GetScreenState(SizeX: &mut c_int, SizeY: &mut c_int, ColorBitDepth: &mut c_int) -> c_int {
+    unsafe {
+        return hidden::dx_GetScreenState(
+            &mut *SizeX as *mut c_int,
+            &mut *SizeY as *mut c_int,
+            &mut *ColorBitDepth as *mut c_int,
+        );
+    }
+}
+
+pub fn dx_PlayMovie(FileName: &str, ExRate: c_int, PlayType: c_int) -> c_int {
+    unsafe {
+        return hidden::dx_PlayMovie(FileName.to_cstring().as_ptr(), ExRate, PlayType);
     }
 }
