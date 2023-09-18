@@ -556,18 +556,18 @@ extern "stdcall" {
     /// マウスカーソルの位置を取得する
     //pub fn dx_GetMousePoint(XBuf: *mut c_int, YBuf: *mut c_int) -> c_int;
     /// マウスカーソルの位置をセットする
-    //pub fn dx_SetMousePoint() -> c_int;
+    pub fn dx_SetMousePoint(PointX: c_int, PointY: c_int) -> c_int;
     /// マウスのボタンの状態を得る
-    //pub fn dx_GetMouseInput() -> c_int;
+    pub fn dx_GetMouseInput() -> c_int;
     /// マウスのボタンが押されたり離されたりした履歴を取得する
-    //pub fn dx_GetMouseInputLog2() -> c_int;
+    //pub fn dx_GetMouseInputLog2(Button:*mut c_int,ClickX:*mut c_int,ClickY:*mut c_int,LogType:*mut c_int, LogDelete:c_int ) -> c_int;
     /// マウスホイールの回転量を得る
-    //pub fn dx_GetMouseWheelRotVol() -> c_int;
+    pub fn dx_GetMouseWheelRotVol() -> c_int;
 
     /// タッチされている箇所の数を取得する
-    //pub fn dx_GetTouchInputNum() -> c_int;
+    pub fn dx_GetTouchInputNum() -> c_int;
     /// タッチされている箇所の情報を取得する
-    //pub fn dx_GetTouchInput() -> c_int;
+    //pub fn dx_GetTouchInput(InputNo:c_int,PositionX:*mut c_int,PositionY:*mut c_int,ID:*mut c_int,Device:*mut c_int) -> c_int;
 
     /// すべてのキーの押下状態を取得
     pub fn dx_CheckHitKeyAll(check_type: c_int) -> c_int;
@@ -577,11 +577,11 @@ extern "stdcall" {
     pub fn dx_GetHitKeyStateAll(key_state_buf: *mut c_char) -> c_int;
 
     /// 文字入力バッファに溜まった文字データから１文字取得する
-    //pub fn dx_GetInputChar() -> c_int;
+    pub fn dx_GetInputChar(DeleteFlag: c_int) -> c_int;
     /// 文字入力バッファに溜まった文字データから１文字取得する、バッファになにも文字コードがない場合はキーが押されるまで待つ
-    //pub fn dx_GetInputCharWait() -> c_int;
+    pub fn dx_GetInputCharWait(DeleteFlag: c_int) -> c_int;
     /// 文字入力バッファをクリアする
-    //pub fn dx_ClearInputCharBuf() -> c_int;
+    pub fn dx_ClearInputCharBuf() -> c_int;
 
     /// キーボードによる文字列の入力
     pub fn dx_KeyInputString(
@@ -660,13 +660,13 @@ extern "stdcall" {
     /// 音ファイルを再生する
     //pub fn dx_PlaySoundFile(FileName:&str,PlayType:c_int) -> c_int;
     /// 音ファイルが再生中か調べる
-    //pub fn dx_CheckSoundFile() -> c_int;
+    pub fn dx_CheckSoundFile() -> c_int;
     /// 音ファイルの再生を止める
-    //pub fn dx_StopSoundFile() -> c_int;
+    pub fn dx_StopSoundFile() -> c_int;
     /// 音ファイルをメモリに読みこむ
     //pub fn dx_LoadSoundMem() -> c_int;
     /// メモリに読みこんだ音データを再生する
-    //pub fn dx_PlaySoundMem() -> c_int;
+    pub fn dx_PlaySoundMem(SoundHandle: c_int, PlayType: c_int, TopPositionFlag: c_int) -> c_int;
     /// メモリに読みこんだ音データが再生中か調べる
     pub fn dx_CheckSoundMem(SoundHandle: c_int) -> c_int;
     /// メモリに読み込んだ音データの再生を止める
@@ -676,41 +676,44 @@ extern "stdcall" {
     /// メモリに読みこんだ音データをすべて消去する
     pub fn dx_InitSoundMem() -> c_int;
     /// メモリに読みこんだ音データの再生にパンを設定する
-    //pub fn dx_ChangePanSoundMem() -> c_int;
+    pub fn dx_ChangePanSoundMem(PanPal: c_int, SoundHandle: c_int) -> c_int;
     /// メモリに読みこんだ音データの再生にボリュームを設定する
-    //pub fn dx_ChangeVolumeSoundMem() -> c_int;
+    pub fn dx_ChangeVolumeSoundMem(VolumePal: c_int, SoundHandle: c_int) -> c_int;
     /// メモリに読みこんだ音データの次の再生にのみ使用するパンを設定する
-    //pub fn dx_ChangeNextPlayPanSoundMem() -> c_int;
+    pub fn dx_ChangeNextPlayPanSoundMem(PanPal: c_int, SoundHandle: c_int) -> c_int;
     /// メモリに読みこんだ音データの次の再生にのみ使用するボリュームを設定する
-    //pub fn dx_ChangeNextPlayVolumeSoundMem() -> c_int;
+    pub fn dx_ChangeNextPlayVolumeSoundMem(VolumePal: c_int, SoundHandle: c_int) -> c_int;
     /// メモリに読み込んだ音データの再生周波数を設定する
-    //pub fn dx_SetFrequencySoundMem() -> c_int;
+    pub fn dx_SetFrequencySoundMem(FrequencyPal: c_int, SoundHandle: c_int) -> c_int;
     /// メモリに読み込んだ音データのループ位置を設定する
-    //pub fn dx_SetLoopPosSoundMem() -> c_int;
+    pub fn dx_SetLoopPosSoundMem(LoopTime: c_int, SoundHandle: c_int) -> c_int;
     /// メモリに読み込んだ音データのループ位置を設定する(サンプル位置指定)
-    //pub fn dx_SetLoopSamplePosSoundMem() -> c_int;
+    pub fn dx_SetLoopSamplePosSoundMem(LoopSamplePosition: c_int, SoundHandle: c_int) -> c_int;
     /// メモリに読み込んだ音データの再生位置をサンプル単位で変更する
-    //pub fn dx_SetCurrentPositionSoundMem() -> c_int;
+    pub fn dx_SetCurrentPositionSoundMem(SamplePosition: c_int, SoundHandle: c_int) -> c_int;
     /// 既にメモリに読み込んである音データを使用するサウンドハンドルを新たに作成する( 非ストリームサウンドのみ )
-    //pub fn dx_DuplicateSoundMem() -> c_int;
+    pub fn dx_DuplicateSoundMem(SrcSoundHandle: c_int) -> c_int;
     /// 作成するメモリに読み込んだ音データのピッチ( 音の長さを変えずに音程を変更する )レートを設定する
-    //pub fn dx_SetCreateSoundPitchRate() -> c_int;
+    pub fn dx_SetCreateSoundPitchRate(Cents: f32) -> c_int;
     /// 作成するメモリに読み込んだ音データのタイムストレッチ( 音程を変えずに音の長さを変更する )レートを設定する
-    //pub fn dx_SetCreateSoundTimeStretchRate() -> c_int;
+    pub fn dx_SetCreateSoundTimeStretchRate(Rate: f32) -> c_int;
     /// メモリに読み込んだ音データの３Ｄサウンド用の再生位置を設定する
-    //pub fn dx_Set3DPositionSoundMem() -> c_int;
+    pub fn dx_Set3DPositionSoundMem(Position: VECTOR, SoundHandle: c_int) -> c_int;
     /// メモリに読み込んだ音データの３Ｄサウンド用の音が聞こえる距離を設定する
-    //pub fn dx_Set3DRadiusSoundMem() -> c_int;
+    pub fn dx_Set3DRadiusSoundMem(Radius: f32, SoundHandle: c_int) -> c_int;
     /// メモリに読み込んだ音データの３Ｄサウンド用の移動速度を設定する
-    //pub fn dx_Set3DVelocitySoundMem() -> c_int;
+    pub fn dx_Set3DVelocitySoundMem(Velocity: VECTOR, SoundHandle: c_int) -> c_int;
     /// メモリに読み込んだ音データの次の再生のみに使用する３Ｄサウンド用の再生位置を設定する
-    //pub fn dx_SetNextPlay3DPositionSoundMem() -> c_int;
+    pub fn dx_SetNextPlay3DPositionSoundMem(Position: VECTOR, SoundHandle: c_int) -> c_int;
     /// メモリに読み込んだ音データの次の再生のみに使用する３Ｄサウンド用の音が聞こえる距離を設定する
-    //pub fn dx_SetNextPlay3DRadiusSoundMem() -> c_int;
+    pub fn dx_SetNextPlay3DRadiusSoundMem(Radius: f32, SoundHandle: c_int) -> c_int;
     /// メモリに読み込んだ音データの次の再生のみに使用する３Ｄサウンド用の移動速度を設定する
-    //pub fn dx_SetNextPlay3DVelocitySoundMem() -> c_int;
+    pub fn dx_SetNextPlay3DVelocitySoundMem(Velocity: VECTOR, SoundHandle: c_int) -> c_int;
     /// メモリに読み込んだ音データの３Ｄサウンド用のリバーブエフェクトパラメータを設定する
-    //pub fn dx_Set3DReverbParamSoundMem() -> c_int;
+    pub fn dx_Set3DReverbParamSoundMem(
+        SOUND3D_REVERB_PARAM: *const XAUDIO2FX_REVERB_PARAMETERS,
+        SoundHandle: c_int,
+    ) -> c_int;
     /// メモリに読み込んだ音データの３Ｄサウンド用のリバーブエフェクトパラメータをプリセットを使用して設定する
     //pub fn dx_Set3DPresetReverbParamSoundMem() -> c_int;
     /// ３Ｄサウンド用のプリセットのリバーブエフェクトパラメータを取得する
@@ -735,13 +738,13 @@ extern "stdcall" {
     // 音楽再生関数
 
     /// ＭＩＤＩ又はＭＰ３ファイルを演奏(再生)する
-    //pub fn dx_PlayMusic() -> c_int;
+    //pub fn dx_PlayMusic(FileName:*const c_char ,PlayType:c_int) -> c_int;
     /// ＭＩＤＩ又はＭＰ３ファイルが演奏(再生)中かの情報を取得する
-    //pub fn dx_CheckMusic() -> c_int;
+    pub fn dx_CheckMusic() -> c_int;
     /// ＭＩＤＩ又はＭＰ３ファイルの演奏(再生)停止
-    //pub fn dx_StopMusic() -> c_int;
+    pub fn dx_StopMusic() -> c_int;
     /// ＭＩＤＩ又はＭＰ３ファイルの演奏(再生)の音量を設定する
-    //pub fn dx_SetVolumeMusic() -> c_int;
+    pub fn dx_SetVolumeMusic(Volume: c_int) -> c_int;
 
     // ウエイト関係の関数
 
@@ -754,7 +757,6 @@ extern "stdcall" {
 
     // 時間関係の関数
 
-    pub fn dx_SetWaitVSyncFlag(Flag: c_int) -> c_int;
     /// ミリ秒単位の精度を持つカウンタの現在値を得る
     pub fn dx_GetNowCount() -> c_int;
     /// GetNowCountの高精度バージョン
@@ -922,19 +924,30 @@ extern "stdcall" {
     /// ＤＸアーカイブファイルの鍵文字列を設定する
     //pub fn dx_SetDXArchiveKeyString() -> c_int;
     /// ６４０ｘ４８０の画面で３２０ｘ２４０の画面解像度にするかどうかのフラグをセットする
-    //pub fn dx_SetEmulation320x240() -> c_int;
+    pub fn dx_SetEmulation320x240(Flag: c_int) -> c_int;
     /// ３Ｄ機能を使うか、のフラグをセット
     pub fn dx_SetUse3DFlag(Flag: c_int) -> c_int;
     /// ScreenFlip関数実行時にＣＲＴの垂直同期信号待ちをするかのフラグセット
-    //pub fn dx_SetWaitVSyncFlag() -> c_int;
+    pub fn dx_SetWaitVSyncFlag(Flag: c_int) -> c_int;
+    // 　描画の際のブレンドモードを詳細に設定する
+    pub fn SetDrawCustomBlendMode(
+        BlendEnable: c_int,
+        SrcBlendRGB: c_int,
+        DestBlendRGB: c_int,
+        BlendOpRGB: c_int,
+        SrcBlendA: c_int,
+        DestBlendA: c_int,
+        BlendOpA: c_int,
+        BlendParam: c_int,
+    );
     /// 必要ならグラフィックの分割を行うか否かを設定する
-    //pub fn dx_SetUseDivGraphFlag() -> c_int;
+    pub fn dx_SetUseDivGraphFlag(Flag:c_int) -> c_int;
     /// フォーカスが他のソフトに移っているときにバックグラウンドに表示するグラフィックを設定する
-    //pub fn dx_LoadPauseGraph() -> c_int;
+    //pub fn dx_LoadPauseGraph(FileName: *const c_char) -> c_int;
     /// 裏画面の内容を表画面にコピーする
-    //pub fn dx_ScreenCopy() -> c_int;
+    pub fn dx_ScreenCopy() -> c_int;
     /// 画面の色ビット数を得る
-    //pub fn dx_GetColorBitDepth() -> c_int;
+    pub fn dx_GetColorBitDepth() -> c_int;
     /// 現在描画対象になっている画面をＢＭＰ形式で保存する
     //pub fn dx_SaveDrawScreen(x1: c_int, y1: c_int, x2: c_int, y2: c_int, FileName: *const c_char) -> c_int;
     /// 使用可能なフォントの名前を列挙する
@@ -957,9 +970,13 @@ extern "stdcall" {
     //pub fn dx_LoadSoundMemByMemImage() -> c_int;
     /// ＭＩＤＩの演奏形態をセットする
     pub fn dx_SelectMidiMode(mode: c_int) -> c_int;
+    /// カーソルを点滅させるかどうかを設定する
     pub fn dx_SetKeyInputCursorBrinkFlag(Flag: c_int) -> c_int;
+    /// ドラッグアンドドロップを有効化するかどうか設定する。
     pub fn dx_SetDragFileValidFlag(Flag: c_int) -> c_int;
+    /// ドラッグアンドドロップされたファイルをひとつ読み出す。 
     pub fn dx_GetDragFilePath(FilePathBuffer: *mut u16) -> c_int;
+    /// ドラッグアンドドロップされたファイルの数を取得する。
     pub fn dx_GetDragFileNum() -> c_int;
 }
 
@@ -981,7 +998,6 @@ mod hidden {
         pub fn dx_LoadGraph(FileName: *const c_char, NotUse3DFlag: c_int) -> c_int;
         pub fn dx_PlaySoundFile(FileName: *const c_char, PlayType: c_int) -> c_int;
         pub fn dx_LoadSoundMem(FileName: *const c_char) -> c_int;
-        pub fn dx_PlaySoundMem(SoundHandle: c_int, PlayType: c_int) -> c_int;
         pub fn dx_DrawString(x: c_int, y: c_int, String: *const c_char, Color: Color) -> c_int;
         pub fn dx_MV1LoadModel(FileName: *const c_char) -> c_int;
         pub fn dx_ChangeFont(FileName: *const c_char) -> c_int;
@@ -1000,6 +1016,8 @@ mod hidden {
         ) -> c_int;
         pub fn dx_LoadFontDataToHandle(FileName: *const c_char, EdgeSize: c_int) -> c_int;
         pub fn dx_SetDXArchiveExtension(Extension: *const c_char) -> c_int;
+
+        pub fn dx_SetDXArchiveKeyString(KeyString: *const c_char) -> c_int;
         pub fn dx_SaveDrawScreen(
             x1: c_int,
             y1: c_int,
@@ -1069,7 +1087,11 @@ mod hidden {
             MaskHandle: c_int,
         ) -> c_int;
         pub fn dx_GetMousePoint(XBuf: *mut c_int, YBuf: *mut c_int) -> c_int;
-    }
+        pub fn dx_PlayMusic(FileName: *const c_char, PlayType: c_int) -> c_int;
+    
+    pub fn dx_LoadPauseGraph(FileName: *const c_char) -> c_int;
+}
+
     #[link(name = "DxLib_x64")]
     #[no_mangle]
     extern "cdecl" {
@@ -1106,11 +1128,6 @@ pub fn dx_LoadSoundMem(FileName: &str) -> c_int {
     }
 }
 
-pub fn dx_PlaySoundMem(SoundHandle: c_int, PlayType: c_int) -> c_int {
-    unsafe {
-        return hidden::dx_PlaySoundMem(SoundHandle, PlayType);
-    }
-}
 pub fn dx_DrawString(x: c_int, y: c_int, String: &str, Color: Color) -> c_int {
     unsafe {
         return hidden::dx_DrawString(x, y, String.to_cstring().as_ptr(), Color);
@@ -1300,6 +1317,22 @@ pub fn dx_GetMaskSize(WidthBuf: &mut c_int, HeightBuf: &mut c_int, MaskHandle: c
 }
 pub fn dx_GetMousePoint(XBuf: &mut c_int, YBuf: &mut c_int) -> c_int {
     unsafe {
-        return hidden::dx_GetMousePoint(&mut *XBuf as *mut i32, &mut *YBuf as *mut i32);
+        return hidden::dx_GetMousePoint(&mut *XBuf as *mut c_int, &mut *YBuf as *mut c_int);
+    }
+}
+pub fn dx_PlayMusic(FileName: &str, PlayType: c_int) -> c_int {
+    unsafe {
+        return hidden::dx_PlayMusic(FileName.to_cstring().as_ptr(), PlayType);
+    }
+}
+pub fn dx_SetDXArchiveKeyString(KeyString: &str) -> c_int {
+    unsafe {
+        return hidden::dx_SetDXArchiveKeyString(KeyString.to_cstring().as_ptr());
+    }
+}
+
+pub fn dx_LoadPauseGraph(FileName: &str) -> c_int{
+    unsafe{
+        return hidden::dx_LoadPauseGraph(FileName.to_cstring().as_ptr());
     }
 }

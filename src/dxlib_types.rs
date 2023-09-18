@@ -52,4 +52,31 @@ pub struct DATEDATA {
     pub Min: i32,  // 分
     pub Sec: i32,  // 秒
 }
+// DirectX
+#[repr(C)]
+pub struct XAUDIO2FX_REVERB_PARAMETERS {
+    pub WetDryMix: f32,
+    pub ReflectionsDelay: u32,
+    pub ReverbDelay: u8,
+    pub RearDelay: u8,
+    pub PositionLeft: u8,
+    pub PositionRight: u8,
+    pub PositionMatrixLeft: u8,
+    pub PositionMatrixRight: u8,
+    pub EarlyDiffusion: u8,
+    pub LateDiffusion: u8,
+    pub LowEQGain: u8,
+    pub LowEQCutoff: u8,
+    pub HighEQGain: u8,
+    pub HighEQCutoff: u8,
+    pub RoomFilterFreq: f32,
+    pub RoomFilterMain: f32,
+    pub RoomFilterHF: f32,
+    pub ReflectionsGain: f32,
+    pub ReverbGain: f32,
+    pub DecayTime: f32,
+    pub Density: f32,
+    pub RoomSize: f32,
+}
+
 pub type Color = u32;
