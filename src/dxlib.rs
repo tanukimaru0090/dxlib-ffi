@@ -444,11 +444,11 @@ extern "stdcall" {
     /// 現在の画面の大きさとカラービット数を得る
     //pub fn dx_GetScreenState(SizeX:*mut c_int,SizeY:*mut c_int,ColorBitDepth:*mut c_int) -> c_int;
     /// 描画可能領域のセット
-    pub fn dx_SetDrawArea(x1: i32, y1: i32, x2: i32, y2: i32) -> c_int;
+    pub fn dx_SetDrawArea(x1: c_int, y1: c_int, x2: c_int, y2: c_int) -> c_int;
     /// 画面に描かれたものを消去する
     //pub fn dx_ClearDrawScreen() -> c_int;
     /// 画面の背景色を設定する
-    pub fn dx_SetBackgroundColor(Red: i32, Green: i32, Blue: i32) -> c_int;
+    pub fn dx_SetBackgroundColor(Red: c_int, Green: c_int, Blue: c_int) -> c_int;
     /// 色コードを取得する
     pub fn dx_GetColor(Red: c_int, Green: c_int, Blue: c_int) -> Color;
     pub fn dx_GetColorU8(Red: c_int, Green: c_int, Blue: c_int, Alpha: c_int) -> COLOR_U8;
@@ -457,55 +457,75 @@ extern "stdcall" {
     /// フリップ関数、画面の裏ページ(普段は表示されていない)の内容を表ページ(普段表示されている)に反映する
     pub fn dx_ScreenFlip() -> c_int;
     /// 画面のフルスクリーンアンチエイリアスモードの設定をする
-    pub fn dx_SetFullSceneAntiAliasingMode(Samples: i32, Quality: i32) -> c_int;
+    pub fn dx_SetFullSceneAntiAliasingMode(Samples: c_int, Quality: c_int) -> c_int;
 
     // 動画関係関数
 
     /// 動画ファイルの再生
     //pub fn dx_PlayMovie(FileName:*const c_char,ExRate:c_int,PlayType:c_int) -> c_int;
     /// ムービーグラフィックの動画の再生を開始する
-    //pub fn dx_PlayMovieToGraph() -> c_int;
+    pub fn dx_PlayMovieToGraph(GraphHandle: c_int) -> c_int;
     /// ムービーグラフィックの動画再生を一時停止する
-    //pub fn dx_PauseMovieToGraph() -> c_int;
+    pub fn dx_PauseMovieToGraph(GraphHandle: c_int) -> c_int;
     /// ムービーグラフィックの動画の再生位置を変更する
-    //pub fn dx_SeekMovieToGraph() -> c_int;
+    pub fn dx_SeekMovieToGraph(GraphHandle: c_int, Time: c_int) -> c_int;
     /// ムービーグラフィックの動画の再生位置を得る
-    //pub fn dx_TellMovieToGraph() -> c_int;
+    pub fn dx_TellMovieToGraph(GraphHandle: c_int) -> c_int;
     /// ムービーグラフィックの動画の再生状態を得る
-    //pub fn dx_GetMovieStateToGraph() -> c_int;
+    pub fn dx_GetMovieStateToGraph(GraphHandle: c_int) -> c_int;
 
     // マスク関係関数
 
     /// マスク画面を作成する
-    //pub fn dx_CreateMaskScreen() -> c_int;
+    pub fn dx_CreateMaskScreen() -> c_int;
     /// マスク画面を削除する
-    //pub fn dx_DeleteMaskScreen() -> c_int;
+    pub fn dx_DeleteMaskScreen() -> c_int;
     /// マスクデータを画像ファイル(BMP.JPEG.PNG)から構築する
-    //pub fn dx_LoadMask() -> c_int;
+    //pub fn dx_LoadMask(FileName: *const c_char) -> c_int;
     /// マスクデータを画像ファイル(BMP.JPEG.PNG)から分割構築する
     //pub fn dx_LoadDivMask() -> c_int;
     /// マスクデータをマスク画面に描画する
-    //pub fn dx_DrawMask() -> c_int;
+    pub fn dx_DrawMask(x: c_int, y: c_int, MaskHandle: c_int, TransMode: c_int) -> c_int;
     /// 指定のマスク画面領域を指定のマスクデータをタイル上に並べて埋める
-    //pub fn dx_DrawFillMask() -> c_int;
+    pub fn dx_DrawFillMask(x1: c_int, y1: c_int, x2: c_int, y2: c_int, MaskHandle: c_int) -> c_int;
     /// マスクデータを削除
-    //pub fn dx_DeleteMask() -> c_int;
+    pub fn dx_DeleteMask(MaskHandle: c_int) -> c_int;
     /// マスクデータを初期化する
-    //pub fn dx_InitMask() -> c_int;
+    pub fn dx_InitMask() -> c_int;
     /// マスク画面を指定の色で塗りつぶす
-    //pub fn dx_FillMaskScreen() -> c_int;
+    pub fn dx_FillMaskScreen(Flag: c_int) -> c_int;
     /// マスク画面の有効の有無を変更
-    //pub fn dx_SetUseMaskScreenFlag() -> c_int;
+    pub fn dx_SetUseMaskScreenFlag(ValidFlag: c_int) -> c_int;
     /// 空のマスクデータの作成
-    //pub fn dx_MakeMask() -> c_int;
+    pub fn dx_MakeMask(Width: c_int, Height: c_int) -> c_int;
     /// マスクデータの大きさを得る
-    //pub fn dx_GetMaskSize() -> c_int;
+    //pub fn dx_GetMaskSize(WidthBuf:*mut c_int,HeightBuf:*mut c_int,MaskHandle:c_int) -> c_int;
     /// マスクのデータをマスクデータ領域に転送する
-    //pub fn dx_SetDataToMask() -> c_int;
+    pub fn dx_SetDataToMask(
+        Width: c_int,
+        Height: c_int,
+        MaskData: *mut c_void,
+        MaskHandle: c_int,
+    ) -> c_int;
     /// マスクのデータをマスク画面に直接描画する
-    //pub fn dx_DrawMaskToDirectData() -> c_int;
+    pub fn dx_DrawMaskToDirectData(
+        x: c_int,
+        y: c_int,
+        Width: c_int,
+        Height: c_int,
+        MaskData: *mut c_void,
+        TransMode: c_int,
+    ) -> c_int;
     /// マスクのデータをタイル上に並べた形で直接マスク画面全体に描画する
-    //pub fn dx_DrawFillMaskToDirectData() -> c_int;
+    pub fn dx_DrawFillMaskToDirectData(
+        x1: c_int,
+        y1: c_int,
+        x2: c_int,
+        y2: c_int,
+        Width: c_int,
+        Height: c_int,
+        MaskData: *mut c_void,
+    ) -> c_int;
 
     // 入力関係の関数
 
@@ -534,7 +554,7 @@ extern "stdcall" {
     /// マウスカーソルの表示設定フラグのセット
     pub fn dx_SetMouseDispFlag(DispFlag: c_int) -> c_int;
     /// マウスカーソルの位置を取得する
-    pub fn dx_GetMousePoint(XBuf: *mut c_int, YBuf: *mut c_int) -> c_int;
+    //pub fn dx_GetMousePoint(XBuf: *mut c_int, YBuf: *mut c_int) -> c_int;
     /// マウスカーソルの位置をセットする
     //pub fn dx_SetMousePoint() -> c_int;
     /// マウスのボタンの状態を得る
@@ -1033,6 +1053,22 @@ mod hidden {
             ColorBitDepth: *mut c_int,
         ) -> c_int;
         pub fn dx_PlayMovie(FileName: *const c_char, ExRate: c_int, PlayType: c_int) -> c_int;
+        pub fn dx_LoadMask(FileName: *const c_char) -> c_int;
+        pub fn dx_LoadDivMask(
+            FileName: *const c_char,
+            AllNum: c_int,
+            XNum: c_int,
+            YNum: c_int,
+            XSize: c_int,
+            YSize: c_int,
+            HandleBuf: *mut c_int,
+        ) -> c_int;
+        pub fn dx_GetMaskSize(
+            WidthBuf: *mut c_int,
+            HeightBuf: *mut c_int,
+            MaskHandle: c_int,
+        ) -> c_int;
+        pub fn dx_GetMousePoint(XBuf: *mut c_int, YBuf: *mut c_int) -> c_int;
     }
     #[link(name = "DxLib_x64")]
     #[no_mangle]
@@ -1225,5 +1261,45 @@ pub fn dx_GetScreenState(SizeX: &mut c_int, SizeY: &mut c_int, ColorBitDepth: &m
 pub fn dx_PlayMovie(FileName: &str, ExRate: c_int, PlayType: c_int) -> c_int {
     unsafe {
         return hidden::dx_PlayMovie(FileName.to_cstring().as_ptr(), ExRate, PlayType);
+    }
+}
+pub fn dx_LoadMask(FileName: &str) -> c_int {
+    unsafe {
+        return hidden::dx_LoadMask(FileName.to_cstring().as_ptr());
+    }
+}
+pub fn dx_LoadDivMask(
+    FileName: &str,
+    AllNum: c_int,
+    XNum: c_int,
+    YNum: c_int,
+    XSize: c_int,
+    YSize: c_int,
+    HandleBuf: *mut c_int,
+) -> c_int {
+    unsafe {
+        return hidden::dx_LoadDivMask(
+            FileName.to_cstring().as_ptr(),
+            AllNum,
+            XNum,
+            YNum,
+            XSize,
+            YSize,
+            HandleBuf,
+        );
+    }
+}
+pub fn dx_GetMaskSize(WidthBuf: &mut c_int, HeightBuf: &mut c_int, MaskHandle: c_int) -> c_int {
+    unsafe {
+        return hidden::dx_GetMaskSize(
+            &mut *WidthBuf as *mut c_int,
+            &mut *HeightBuf as *mut c_int,
+            MaskHandle,
+        );
+    }
+}
+pub fn dx_GetMousePoint(XBuf: &mut c_int, YBuf: &mut c_int) -> c_int {
+    unsafe {
+        return hidden::dx_GetMousePoint(&mut *XBuf as *mut i32, &mut *YBuf as *mut i32);
     }
 }
