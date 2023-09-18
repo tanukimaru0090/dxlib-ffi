@@ -43,5 +43,13 @@ pub struct VERTEX3D {
     pub su: f32,
     pub sv: f32,
 }
-
+#[repr(C)]
+pub struct DATEDATA {
+    pub Year: i32, // 年
+    pub Mon: i32,  // 月
+    pub Day: i32,  // 日
+    pub Hour: i32, // 時間
+    pub Min: i32,  // 分
+    pub Sec: i32,  // 秒
+}
 pub type Color = u32;
