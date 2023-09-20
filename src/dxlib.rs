@@ -913,9 +913,7 @@ extern "stdcall" {
 
     // マイナー関数
     
-    //ウィンドウの見た目を変更する
-    pub fn  dx_SetWindowStyleMode(Mode:c_int)->c_int;
-
+    
     /// ウインドウがアクティブではない状態でも処理を続行するか、フラグをセットする
     pub fn dx_SetAlwaysRunFlag(Flag: c_int) -> c_int;
     /// ログ出力を行うか否かのセット
