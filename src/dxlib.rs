@@ -981,6 +981,8 @@ extern "stdcall" {
     pub fn dx_GetDragFilePath(FilePathBuffer: *mut u16) -> c_int;
     /// ドラッグアンドドロップされたファイルの数を取得する。
     pub fn dx_GetDragFileNum() -> c_int;
+    // ウィンドウの見た目を変える
+    pub fn dx_SetWindowStyleMode(Mode:c_int)->c_int;
 }
 
 extern "cdecl" {
