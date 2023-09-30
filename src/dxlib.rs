@@ -913,7 +913,7 @@ extern "stdcall" {
 
     // マイナー関数
     
-    
+    pub fn dx_SetUseBackBufferTransColorFlag(Flag:c_int)->c_int;
     /// ウインドウがアクティブではない状態でも処理を続行するか、フラグをセットする
     pub fn dx_SetAlwaysRunFlag(Flag: c_int) -> c_int;
     /// ログ出力を行うか否かのセット
