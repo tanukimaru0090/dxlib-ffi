@@ -13,6 +13,18 @@ pub struct VECTOR {
     pub y: f32,
     pub z: f32,
 }
+impl Clone for VECTOR {
+    fn clone(&self) -> Self {
+        VECTOR {
+            x: self.x,
+            y: self.y,
+            z: self.z,
+        }
+    }
+}
+
+
+
 #[repr(C)]
 pub struct COLOR_U8 {
     pub a: u8,
