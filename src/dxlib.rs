@@ -13,7 +13,9 @@ use std::vec::Vec;
 pub trait Encode {
     fn to_shiftjis(&self) -> CString;
     fn to_cstring(&self) -> CString;
+    fn to_tchar(&self) -> *mut u16;
 }
+
 impl Encode for &str {
     // &strをshiftjisのエンコーディングとして変換し、CStringを返す
     fn to_shiftjis(&self) -> CString {
@@ -24,6 +26,11 @@ impl Encode for &str {
     // &strをデフォルトのUTF-8のエンコーディングとして変換し、CStringを返す
     fn to_cstring(&self) -> CString {
         return CString::new(self.as_bytes()).unwrap();
+    }
+    fn to_tchar(&self) -> *mut u16 {
+        let mut ptr = self.to_cstring().as_ptr();
+        let mut u16_ptr = ptr as *mut u16;
+        return u16_ptr;
     }
 }
 impl Encode for String {
@@ -36,6 +43,11 @@ impl Encode for String {
     // StringをデフォルトのUTF-8のエンコーディングとして変換し、CStringを返す
     fn to_cstring(&self) -> CString {
         return CString::new(self.clone().into_bytes()).unwrap();
+    }
+    fn to_tchar(&self) -> *mut u16 {
+        let mut ptr = self.to_cstring().as_ptr();
+        let mut u16_ptr = ptr as *mut u16;
+        return u16_ptr;
     }
 }
 
@@ -969,7 +981,9 @@ extern "stdcall" {
     /// 文字列の先頭の文字のバイト数を取得する
     //pub fn dx_GetCharBytes() -> c_int;
 
-    // マイナー関数
+    // ログ関係
+    pub fn dx_ErrorLogAdd(ErrorStr: *const TCHAR) -> c_int; // ログファイル( Log.txt ) に文字列を出力する
+                                                            // マイナー関数
     pub fn dx_SetUseBackBufferTransColorFlag(Flag: c_int) -> c_int;
     /// ウインドウがアクティブではない状態でも処理を続行するか、フラグをセットする
     pub fn dx_SetAlwaysRunFlag(Flag: c_int) -> c_int;
@@ -1033,7 +1047,7 @@ extern "stdcall" {
     /// ドラッグアンドドロップを有効化するかどうか設定する。
     pub fn dx_SetDragFileValidFlag(Flag: c_int) -> c_int;
     /// ドラッグアンドドロップされたファイルをひとつ読み出す。
-    pub fn dx_GetDragFilePath(FilePathBuffer: *mut u16) -> c_int;
+    pub fn dx_GetDragFilePath(FilePathBuffer: *mut TCHAR) -> c_int;
     /// ドラッグアンドドロップされたファイルの数を取得する。
     pub fn dx_GetDragFileNum() -> c_int;
     // ウィンドウの見た目を変える

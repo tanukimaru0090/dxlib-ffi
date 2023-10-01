@@ -17,3 +17,5 @@ path="src/lib.rs"
 
 [dependencies]
 encoding_rs = "0.8.32"
+windows = "0.51.1"
+

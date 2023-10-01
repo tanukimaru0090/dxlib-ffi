@@ -101,5 +101,5 @@ pub struct IPDATA {
 pub struct MATRIX {
     pub m: [[f32; 4]; 4],
 }
-
+pub type TCHAR = u16;
 pub type Color = u32;
