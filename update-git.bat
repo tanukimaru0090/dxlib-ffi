@@ -23,4 +23,4 @@
 		echo cargo checkに失敗,またはその他のエラーが発生しました
 )
 @endlocal
-@call :main
+REM @call :main
