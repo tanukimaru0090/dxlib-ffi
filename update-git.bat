@@ -1,7 +1,10 @@
 @REM cargo-git.bat
 @REM cargo check and git command 
+:main
+
 @setlocal
 @set git_command=git add . ^& git commit -m Update^&git push
+
 :git_err
 	@if %errorlevel% equ 1 (
 		echo git commandに失敗しました
@@ -10,7 +13,7 @@
 		echo 再度git commandを試します。
 		@call %git_command% 
 	)
-REM @exit /b
+:git_err_eof 
 
 @REM *MainEntry*
 	@REM cargo check 
@@ -21,7 +24,12 @@ REM @exit /b
 	@if %errorlevel% equ 1 (
 	     @REM エラーメッセージ表示をし、git commandを再度行う
 	     @call :git_err
+	     @goto git_err_eof
 	) else (
 		echo cargo checkに失敗,またはその他のエラーが発生しました
 	)	
 @endlocal
+:main_eof
+
+@call main
+goto main_eof
