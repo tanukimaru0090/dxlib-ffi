@@ -16,6 +16,15 @@ pub trait ToEncode {
     fn to_cstring(&self) -> CString;
     //fn to_tchar(&self) ->;
 }
+impl AsEncode for [i8]{
+    fn as_str(&self)->String{
+        unsafe{
+            let mut cstr = std::ffi::CStr::from_ptr(self.as_ptr());
+            let mut string = cstr.to_str().unwrap().to_string();
+            return string;
+        }
+    }
+}
 impl AsEncode for CString {
     fn as_str(&self) -> String {
         unsafe {
