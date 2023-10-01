@@ -13,7 +13,7 @@ use std::vec::Vec;
 pub trait Encode {
     fn to_shiftjis(&self) -> CString;
     fn to_cstring(&self) -> CString;
-    fn to_tchar(&self) -> *mut u16;
+    //fn to_tchar(&self) ->;
 }
 
 impl Encode for &str {
@@ -27,11 +27,6 @@ impl Encode for &str {
     fn to_cstring(&self) -> CString {
         return CString::new(self.as_bytes()).unwrap();
     }
-    fn to_tchar(&self) -> *mut u16 {
-        let mut ptr = self.to_cstring().as_ptr();
-        let mut u16_ptr = ptr as *mut u16;
-        return u16_ptr;
-    }
 }
 impl Encode for String {
     // Stringをshiftjisのエンコーディングとして変換し、CStringを返す
@@ -43,11 +38,6 @@ impl Encode for String {
     // StringをデフォルトのUTF-8のエンコーディングとして変換し、CStringを返す
     fn to_cstring(&self) -> CString {
         return CString::new(self.clone().into_bytes()).unwrap();
-    }
-    fn to_tchar(&self) -> *mut u16 {
-        let mut ptr = self.to_cstring().as_ptr();
-        let mut u16_ptr = ptr as *mut u16;
-        return u16_ptr;
     }
 }
 
@@ -983,7 +973,7 @@ extern "stdcall" {
 
     // ログ関係
     pub fn dx_ErrorLogAdd(ErrorStr: *const c_char) -> c_int; // ログファイル( Log.txt ) に文字列を出力する
-                                                            // マイナー関数
+                                                             // マイナー関数
     pub fn dx_SetUseBackBufferTransColorFlag(Flag: c_int) -> c_int;
     /// ウインドウがアクティブではない状態でも処理を続行するか、フラグをセットする
     pub fn dx_SetAlwaysRunFlag(Flag: c_int) -> c_int;
@@ -1047,7 +1037,7 @@ extern "stdcall" {
     /// ドラッグアンドドロップを有効化するかどうか設定する。
     pub fn dx_SetDragFileValidFlag(Flag: c_int) -> c_int;
     /// ドラッグアンドドロップされたファイルをひとつ読み出す。
-    pub fn dx_GetDragFilePath(FilePathBuffer: *mut TCHAR) -> c_int;
+    pub fn dx_GetDragFilePath(FilePathBuffer: *mut c_char) -> c_int;
     /// ドラッグアンドドロップされたファイルの数を取得する。
     pub fn dx_GetDragFileNum() -> c_int;
     // ウィンドウの見た目を変える
