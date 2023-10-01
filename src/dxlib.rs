@@ -982,7 +982,7 @@ extern "stdcall" {
     //pub fn dx_GetCharBytes() -> c_int;
 
     // ログ関係
-    pub fn dx_ErrorLogAdd(ErrorStr: *const TCHAR) -> c_int; // ログファイル( Log.txt ) に文字列を出力する
+    pub fn dx_ErrorLogAdd(ErrorStr: *const c_char) -> c_int; // ログファイル( Log.txt ) に文字列を出力する
                                                             // マイナー関数
     pub fn dx_SetUseBackBufferTransColorFlag(Flag: c_int) -> c_int;
     /// ウインドウがアクティブではない状態でも処理を続行するか、フラグをセットする
