@@ -20,16 +20,17 @@
 @REM *MainEntry*
 	@REM cargo check 
 	@cargo check
+
+	@if %errorlevel% equ 0 (
 	@call %git_command%
 	@REM git コマンドが失敗したら
 	@REM index.lockを削除してもう一度実行
-	@if %errorlevel% equ 1 (
-	     @REM エラーメッセージ表示をし、git commandを再度行う
-	     @call :git_err
-	     @goto git_err_eof
-	) else (
-		echo cargo checkに失敗,またはその他のエラーが発生しました
-	)	
+		@if %errorlevel% equ 1 (
+			@REM エラーメッセージ表示をし、git commandを再度行う
+			@call :git_err
+			@goto git_err_eof
+		)
+	)
 @endlocal
 @exit /b
 :main_eof
