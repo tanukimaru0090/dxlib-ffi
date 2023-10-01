@@ -6,7 +6,7 @@ use std::os::raw::c_char;
 use std::os::raw::c_void;
 use std::os::raw::*;
 use std::vec::Vec;
-use crate::c_encode::*;
+pub use crate::c_encode::*;
 /// dxlib function extern declaration (based on Ver3.24b)
 /// see: https://dxlib.xsrv.jp/dxfunc.html
 #[link(name = "DxLib_x64")]
