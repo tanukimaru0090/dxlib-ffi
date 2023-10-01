@@ -23,4 +23,5 @@
 		echo cargo checkに失敗,またはその他のエラーが発生しました
 )
 @endlocal
+exit /b
 @call :main
