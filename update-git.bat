@@ -5,9 +5,7 @@
 @cargo check
 @REM Cargo Checkが成功したら
 @setlocal
-@set git_command=git add .
-git commit -m Update
-git push
+@set git_command=git add . ^& git commit -m Update^&git push
 @if %errorlevel% equ 0 (
 	@call %git_command%
 	@REM git コマンドが失敗したら
