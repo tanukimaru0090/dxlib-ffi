@@ -20,9 +20,11 @@ pub trait ToEncode {
 }
 impl AsEncode for CString {
     fn as_str(&self) -> String {
-        let mut cstr = std::ffi::CStr::from_ptr(self.as_ptr());
-        let mut string = cstr.to_str().unwrap().to_string();
-        return string;
+        unsafe {
+            let mut cstr = std::ffi::CStr::from_ptr(self.as_ptr());
+            let mut string = cstr.to_str().unwrap().to_string();
+            return string;
+        }
     }
 }
 impl ToEncode for &str {
