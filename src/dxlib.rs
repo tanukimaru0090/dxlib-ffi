@@ -845,15 +845,15 @@ extern "stdcall" {
     // 通信関係
 
     /// 他のマシンに接続する
-    //pub fn dx_ConnectNetWork() -> c_int;
+    pub fn dx_ConnectNetWork(IPData: IPDATA, Port: c_int) -> c_int;
     /// 接続を終了する
-    //pub fn dx_CloseNetWork() -> c_int;
+    pub fn dx_CloseNetWork(NetHandle: c_int) -> c_int;
     /// 接続を受け付けられる状態にする
-    //pub fn dx_PreparationListenNetWork() -> c_int;
+    pub fn dx_PreparationListenNetWork(Port: c_int) -> c_int;
     /// 接続を受け付けている状態を解除する
-    //pub fn dx_StopListenNetWork() -> c_int;
+    pub fn dx_StopListenNetWork() -> c_int;
     /// データを送信する
-    //pub fn dx_NetWorkSend() -> c_int;
+    pub fn dx_NetWorkSend(NetHandle: c_int, Buffer: *mut c_void, Length: c_int) -> c_int;
     /// 受信データ一時記憶バッファに溜まっているデータの量を得る
     //pub fn dx_GetNetWorkDataLength() -> c_int;
     /// 未送信のデータの量を得る
@@ -907,11 +907,11 @@ extern "stdcall" {
     // ドット単位で画像にアクセスしたい関係
 
     /// ＣＰＵで扱うイメージの読み込み
-    //pub fn dx_LoadSoftImage() -> c_int;
+    //pub fn dx_LoadSoftImage(FileName:*const c_char) -> c_int;
     /// ＣＰＵで扱うイメージの読み込み( RGBA8 カラーに変換 )
-    //pub fn dx_LoadARGB8ColorSoftImage() -> c_int;
+    //pub fn dx_LoadARGB8ColorSoftImage(FileName:*const c_char) -> c_int;
     /// ＣＰＵで扱うイメージの読み込み( XGBA8 カラーに変換 )
-    //pub fn dx_LoadXRGB8ColorSoftImage() -> c_int;
+    //puFileName:*const c_charb fn dx_LoadXRGB8ColorSoftImage(FileName:*const c_char) -> c_int;
     /// ＣＰＵで扱うイメージのメモリからの読み込み
     //pub fn dx_LoadSoftImageToMem() -> c_int;
     /// ＣＰＵで扱うイメージのメモリからの読み込み( RGBA8 カラーに変換 )
@@ -1150,6 +1150,10 @@ mod hidden {
         pub fn dx_PlayMusic(FileName: *const c_char, PlayType: c_int) -> c_int;
 
         pub fn dx_LoadPauseGraph(FileName: *const c_char) -> c_int;
+        pub fn dx_LoadSoftImage(FileName: *const c_char) -> c_int;
+        pub fn dx_LoadARGB8ColorSoftImage(FileName: *const c_char) -> c_int;
+        pub fn dx_LoadXRGB8ColorSoftImage(FileName: *const c_char) -> c_int;
+
     }
 
     #[link(name = "DxLib_x64")]
@@ -1394,5 +1398,20 @@ pub fn dx_SetDXArchiveKeyString(KeyString: &str) -> c_int {
 pub fn dx_LoadPauseGraph(FileName: &str) -> c_int {
     unsafe {
         return hidden::dx_LoadPauseGraph(FileName.to_cstring().as_ptr());
+    }
+}
+pub fn dx_LoadSoftImage(FileName: &str) -> c_int {
+    unsafe {
+        return hidden::dx_LoadSoftImage(FileName.to_cstring().as_ptr());
+    }
+}
+pub fn dx_LoadARGB8ColorSoftImage(FileName: &str) -> c_int {
+    unsafe {
+        return hidden::dx_LoadARGB8ColorSoftImage(FileName.to_cstring().as_ptr());
+    }
+}
+pub fn dx_LoadXRGB8ColorSoftImage(FileName: &str) -> c_int {
+    unsafe {
+        return hidden::dx_LoadXRGB8ColorSoftImage(FileName.to_cstring().as_ptr());
     }
 }

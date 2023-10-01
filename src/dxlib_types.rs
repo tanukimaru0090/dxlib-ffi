@@ -1,11 +1,11 @@
 /*dxlib struct types*/
-
+use std::os::raw::*;
 #[repr(C)]
 pub struct RECT {
-    pub left: i32,
-    pub top: i32,
-    pub right: i32,
-    pub bottom: i32,
+    pub left: c_int,
+    pub top: c_int,
+    pub right: c_int,
+    pub bottom: c_int,
 }
 #[repr(C)]
 pub struct VECTOR {
@@ -56,12 +56,12 @@ pub struct VERTEX3D {
 
 #[repr(C)]
 pub struct DATEDATA {
-    pub Year: i32, // 年
-    pub Mon: i32,  // 月
-    pub Day: i32,  // 日
-    pub Hour: i32, // 時間
-    pub Min: i32,  // 分
-    pub Sec: i32,  // 秒
+    pub Year: c_int, // 年
+    pub Mon: c_int,  // 月
+    pub Day: c_int,  // 日
+    pub Hour: c_int, // 時間
+    pub Min: c_int,  // 分
+    pub Sec: c_int,  // 秒
 }
 // DirectX
 #[repr(C)]
@@ -90,6 +90,13 @@ pub struct XAUDIO2FX_REVERB_PARAMETERS {
     pub RoomSize: f32,
 }
 
+#[repr(C)]
+pub struct IPDATA {
+    d1: c_uchar,
+    d2: c_uchar,
+    d3: c_uchar,
+    d4: c_uchar,
+}
 #[repr(C)]
 pub struct MATRIX {
     pub m: [[f32; 4]; 4],
