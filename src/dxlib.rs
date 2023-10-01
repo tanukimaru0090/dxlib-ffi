@@ -9,14 +9,23 @@ use std::os::raw::c_void;
 use std::os::raw::*;
 use std::vec::Vec;
 
+pub trait AsEncode {
+    fn as_str(&self) -> String;
+}
 //エンコーディング変換
-pub trait Encode {
+pub trait ToEncode {
     fn to_shiftjis(&self) -> CString;
     fn to_cstring(&self) -> CString;
     //fn to_tchar(&self) ->;
 }
-
-impl Encode for &str {
+impl AsEncode for CString {
+    fn as_str(&self) -> String {
+        let mut cstr = std::ffi::CStr::from_ptr(self.as_ptr());
+        let mut string = cstr.to_str().unwrap().to_string();
+        return string;
+    }
+}
+impl ToEncode for &str {
     // &strをshiftjisのエンコーディングとして変換し、CStringを返す
     fn to_shiftjis(&self) -> CString {
         let (res, _enc, errors) = SHIFT_JIS.encode(self);
@@ -28,7 +37,7 @@ impl Encode for &str {
         return CString::new(self.as_bytes()).unwrap();
     }
 }
-impl Encode for String {
+impl ToEncode for String {
     // Stringをshiftjisのエンコーディングとして変換し、CStringを返す
     fn to_shiftjis(&self) -> CString {
         let (res, _enc, errors) = SHIFT_JIS.encode(&self);
