@@ -23,8 +23,6 @@ impl Clone for VECTOR {
     }
 }
 
-
-
 #[repr(C)]
 pub struct COLOR_U8 {
     pub a: u8,
@@ -55,6 +53,7 @@ pub struct VERTEX3D {
     pub su: f32,
     pub sv: f32,
 }
+
 #[repr(C)]
 pub struct DATEDATA {
     pub Year: i32, // 年
@@ -89,6 +88,11 @@ pub struct XAUDIO2FX_REVERB_PARAMETERS {
     pub DecayTime: f32,
     pub Density: f32,
     pub RoomSize: f32,
+}
+
+#[repr(C)]
+pub struct MATRIX {
+    pub m: [[f32; 4]; 4],
 }
 
 pub type Color = u32;

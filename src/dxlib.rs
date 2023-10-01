@@ -55,15 +55,73 @@ extern "stdcall" {
 
     //算術演算関数
     pub fn dx_VGet(x: f32, y: f32, z: f32) -> VECTOR;
+    pub fn dx_VAdd(In1: VECTOR, In2: VECTOR) -> VECTOR;
+    pub fn dx_VSub(In1: VECTOR, In2: VECTOR) -> VECTOR;
+    pub fn dx_VDot(In1: VECTOR, In2: VECTOR) -> f32;
+    pub fn dx_VCross(In1: VECTOR, In2: VECTOR) -> VECTOR;
+    pub fn dx_VScale(In: VECTOR, Scale: f32) -> VECTOR;
+    pub fn dx_VSize(In: VECTOR) -> f32;
+    pub fn dx_VSquareSize(In: VECTOR) -> f32;
+    pub fn dx_VNorm(In: VECTOR) -> VECTOR;
+    pub fn dx_VTransform(InV: VECTOR, InM: MATRIX) -> VECTOR;
+    pub fn dx_VTransformSR(InV: VECTOR, InM: MATRIX) -> VECTOR;
 
+    pub fn dx_MGetIdent() -> MATRIX;
+    pub fn dx_MGetScale(Scale: VECTOR) -> MATRIX;
+    pub fn dx_MGetTranslate(Trans: VECTOR) -> MATRIX;
+    pub fn dx_MGetRotX(XAxisRotate: f32) -> MATRIX;
+
+    pub fn dx_MGetRotY(YAxisRotate: f32) -> MATRIX;
+    pub fn dx_MGetRotZ(ZAxisRotate: f32) -> MATRIX;
+
+    pub fn dx_MGetRotAxis(RotateAxis: VECTOR, Rotate: f32) -> MATRIX;
+    pub fn dx_MGetRotVec2(In1: VECTOR, In2: VECTOR) -> MATRIX;
+
+    pub fn dx_MGetAxis1(XAxis: VECTOR, YAxis: VECTOR, ZAxis: VECTOR, Pos: VECTOR) -> MATRIX;
+
+    pub fn dx_MGetAxis2(XAxis: VECTOR, YAxis: VECTOR, ZAxis: VECTOR, Pos: VECTOR) -> MATRIX;
+    pub fn dx_MAdd(In1: MATRIX, In2: MATRIX) -> MATRIX;
+    pub fn dx_MMult(In1: MATRIX, In2: MATRIX) -> MATRIX;
+    pub fn dx_MScale(InM: MATRIX, Scale: f32) -> MATRIX;
+    pub fn dx_MTranspose(InM: MATRIX) -> MATRIX;
+    pub fn dx_MInverse(InM: MATRIX) -> MATRIX;
+
+    // Live2D 関係関数
+    pub fn dx_Live2D_SetCubism4CoreDLLPath(CoreDLLFilePath: *const c_char);
+    pub fn dx_Live2D_RenderBegin();
+    pub fn dx_Live2D_RenderEnd();
+    pub fn dx_Live2D_LoadModel(FilePath: *const c_char);
+    pub fn dx_Live2D_DeleteModel(Live2DModelHandle: c_int);
+    pub fn dx_Live2D_Model_Update(Live2DModelHandle: c_int, DeltaTimeSeconds: f32);
+    pub fn dx_Live2D_Model_Draw(Live2DModelHandle: c_int);
+    pub fn dx_Live2D_Model_SetTranslate(Live2DModelHandle: c_int, x: f32, y: f32) -> c_int;
+    pub fn dx_Live2D_Model_SetExtendRate(
+        Live2DModelHandle: c_int,
+        ExRateX: f32,
+        ExRateY: f32,
+    ) -> c_int;
+    pub fn dx_Live2D_Model_SetRotate(Live2DModelHandle: c_int, RotAngle: f32) -> c_int;
+    pub fn dx_Live2D_Model_StartMotion(
+        Live2DModelHandle: c_int,
+        group: *const c_char,
+        no: c_int,
+    ) -> c_int;
+
+    pub fn dx_Live2D_Model_IsMotionFinished(Live2DModelHandle: c_int) -> c_int;
+    pub fn dx_Live2D_Model_SetExpression(
+        Live2DModelHandle: c_int,
+        expressionID: *const c_char,
+    ) -> c_int;
     // ３Ｄ関係関数
+    pub fn dx_MV1DuplicateModel(SrcMHandle: c_int) -> c_int;
     pub fn dx_MV1AttachAnim(
         MHandle: c_int,
         AnimIndex: c_int,
         AnimSrcMHandle: c_int,
         NameCheck: c_int,
     ) -> c_int;
-
+    pub fn dx_MV1SetLoadModelPhysicsWorldGravity(Gravity: f32) -> c_int;
+    pub fn dx_MV1SetLoadModelUsePhysicsMode(PhysicsMode: c_int) -> c_int;
     pub fn dx_MV1GetAnimNum(MHandle: c_int) -> c_int;
     pub fn dx_MV1DetachAnim(MHandle: c_int, AttachIndex: c_int) -> c_int;
     pub fn dx_MV1SetAttachAnimTime(MHandle: c_int, AttachIndex: c_int, Time: f32) -> c_int;
@@ -912,8 +970,7 @@ extern "stdcall" {
     //pub fn dx_GetCharBytes() -> c_int;
 
     // マイナー関数
-    
-    pub fn dx_SetUseBackBufferTransColorFlag(Flag:c_int)->c_int;
+    pub fn dx_SetUseBackBufferTransColorFlag(Flag: c_int) -> c_int;
     /// ウインドウがアクティブではない状態でも処理を続行するか、フラグをセットする
     pub fn dx_SetAlwaysRunFlag(Flag: c_int) -> c_int;
     /// ログ出力を行うか否かのセット
@@ -942,7 +999,7 @@ extern "stdcall" {
         BlendParam: c_int,
     );
     /// 必要ならグラフィックの分割を行うか否かを設定する
-    pub fn dx_SetUseDivGraphFlag(Flag:c_int) -> c_int;
+    pub fn dx_SetUseDivGraphFlag(Flag: c_int) -> c_int;
     /// フォーカスが他のソフトに移っているときにバックグラウンドに表示するグラフィックを設定する
     //pub fn dx_LoadPauseGraph(FileName: *const c_char) -> c_int;
     /// 裏画面の内容を表画面にコピーする
@@ -975,12 +1032,12 @@ extern "stdcall" {
     pub fn dx_SetKeyInputCursorBrinkFlag(Flag: c_int) -> c_int;
     /// ドラッグアンドドロップを有効化するかどうか設定する。
     pub fn dx_SetDragFileValidFlag(Flag: c_int) -> c_int;
-    /// ドラッグアンドドロップされたファイルをひとつ読み出す。 
+    /// ドラッグアンドドロップされたファイルをひとつ読み出す。
     pub fn dx_GetDragFilePath(FilePathBuffer: *mut u16) -> c_int;
     /// ドラッグアンドドロップされたファイルの数を取得する。
     pub fn dx_GetDragFileNum() -> c_int;
     // ウィンドウの見た目を変える
-    pub fn dx_SetWindowStyleMode(Mode:c_int)->c_int;
+    pub fn dx_SetWindowStyleMode(Mode: c_int) -> c_int;
 }
 
 extern "cdecl" {
@@ -1091,9 +1148,9 @@ mod hidden {
         ) -> c_int;
         pub fn dx_GetMousePoint(XBuf: *mut c_int, YBuf: *mut c_int) -> c_int;
         pub fn dx_PlayMusic(FileName: *const c_char, PlayType: c_int) -> c_int;
-    
-    pub fn dx_LoadPauseGraph(FileName: *const c_char) -> c_int;
-}
+
+        pub fn dx_LoadPauseGraph(FileName: *const c_char) -> c_int;
+    }
 
     #[link(name = "DxLib_x64")]
     #[no_mangle]
@@ -1334,8 +1391,8 @@ pub fn dx_SetDXArchiveKeyString(KeyString: &str) -> c_int {
     }
 }
 
-pub fn dx_LoadPauseGraph(FileName: &str) -> c_int{
-    unsafe{
+pub fn dx_LoadPauseGraph(FileName: &str) -> c_int {
+    unsafe {
         return hidden::dx_LoadPauseGraph(FileName.to_cstring().as_ptr());
     }
 }
