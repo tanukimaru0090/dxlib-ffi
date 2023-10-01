@@ -81,6 +81,9 @@ extern "stdcall" {
         expressionID: *const c_char,
     ) -> c_int;
     // ３Ｄ関係関数
+    
+
+    pub fn dx_MV1SetShapeRate(MHandle:i32,ShapeIndex:i32, Rate:f32 )->i32 ;
     pub fn dx_MV1DuplicateModel(SrcMHandle: c_int) -> c_int;
     pub fn dx_MV1AttachAnim(
         MHandle: c_int,
