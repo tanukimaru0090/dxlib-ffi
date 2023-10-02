@@ -1,18 +1,29 @@
 /*dxlib struct types*/
 #![allow(non_snake_case)]
+use std::ops::*;
 use std::os::raw::*;
 #[repr(C)]
 pub struct RECT {
-    pub left: c_int,
-    pub top: c_int,
-    pub right: c_int,
-    pub bottom: c_int,
+    pub left: CInt,
+    pub top: CInt,
+    pub right: CInt,
+    pub bottom: CInt,
 }
 #[repr(C)]
 pub struct VECTOR {
-    pub x: f32,
-    pub y: f32,
-    pub z: f32,
+    pub x: CFloat,
+    pub y: CFloat,
+    pub z: CFloat,
+}
+impl Add for VECTOR {
+    type Output = VECTOR;
+    fn add(self, other: VECTOR) -> VECTOR {
+        return VECTOR {
+            x: self.x + other.x,
+            y: self.y + other.y,
+            z: self.z + other.z,
+        };
+    }
 }
 impl Clone for VECTOR {
     fn clone(&self) -> Self {
@@ -23,7 +34,6 @@ impl Clone for VECTOR {
         }
     }
 }
-
 #[repr(C)]
 pub struct COLOR_U8 {
     pub a: u8,
@@ -33,24 +43,24 @@ pub struct COLOR_U8 {
 }
 #[repr(C)]
 pub struct COLOR_F {
-    pub a: f32,
-    pub r: f32,
-    pub g: f32,
-    pub b: f32,
+    pub a: CFloat,
+    pub r: CFloat,
+    pub g: CFloat,
+    pub b: CFloat,
 }
 
 #[repr(C)]
 pub struct MATERIALPARAM {
     // ディフューズカラー
-    Diffuse: COLOR_F,
+    pub Diffuse: COLOR_F,
     // アンビエントカラー
-    Ambient: COLOR_F,
+    pub Ambient: COLOR_F,
     // スペキュラカラー
-    Specular: COLOR_F,
+    pub Specular: COLOR_F,
     // エミッシブカラー
-    Emissive: COLOR_F,
+    pub Emissive: COLOR_F,
     // スペキュラの強さ
-    Power: f32,
+    pub Power: CFloat,
 }
 #[repr(C)]
 // ３Ｄ描画に使用する頂点データ型
@@ -68,27 +78,33 @@ pub struct VERTEX3D {
     pub spc: COLOR_U8,
 
     // テクスチャ座標
-    pub u: f32,
-    pub v: f32,
+    pub u: CFloat,
+    pub v: CFloat,
 
     // サブテクスチャ座標
-    pub su: f32,
-    pub sv: f32,
+    pub su: CFloat,
+    pub sv: CFloat,
 }
-
+#[repr(C)]
+pub struct HITRESULT_LINE {
+    // 接触しているかどうか( 1:接触している  0:接触していない )
+    pub HitFlag: CInt,
+    // 接触した座標( HitFlag が 1 の場合のみ有効 )
+    pub Position: VECTOR,
+}
 #[repr(C)]
 pub struct DATEDATA {
-    pub Year: c_int, // 年
-    pub Mon: c_int,  // 月
-    pub Day: c_int,  // 日
-    pub Hour: c_int, // 時間
-    pub Min: c_int,  // 分
-    pub Sec: c_int,  // 秒
+    pub Year: CInt, // 年
+    pub Mon: CInt,  // 月
+    pub Day: CInt,  // 日
+    pub Hour: CInt, // 時間
+    pub Min: CInt,  // 分
+    pub Sec: CInt,  // 秒
 }
 // DirectX
 #[repr(C)]
 pub struct XAUDIO2FX_REVERB_PARAMETERS {
-    pub WetDryMix: f32,
+    pub WetDryMix: CFloat,
     pub ReflectionsDelay: u32,
     pub ReverbDelay: u8,
     pub RearDelay: u8,
@@ -102,14 +118,14 @@ pub struct XAUDIO2FX_REVERB_PARAMETERS {
     pub LowEQCutoff: u8,
     pub HighEQGain: u8,
     pub HighEQCutoff: u8,
-    pub RoomFilterFreq: f32,
-    pub RoomFilterMain: f32,
-    pub RoomFilterHF: f32,
-    pub ReflectionsGain: f32,
-    pub ReverbGain: f32,
-    pub DecayTime: f32,
-    pub Density: f32,
-    pub RoomSize: f32,
+    pub RoomFilterFreq: CFloat,
+    pub RoomFilterMain: CFloat,
+    pub RoomFilterHF: CFloat,
+    pub ReflectionsGain: CFloat,
+    pub ReverbGain: CFloat,
+    pub DecayTime: CFloat,
+    pub Density: CFloat,
+    pub RoomSize: CFloat,
 }
 
 #[repr(C)]
@@ -121,7 +137,7 @@ pub struct IPDATA {
 }
 #[repr(C)]
 pub struct MATRIX {
-    pub m: [[f32; 4]; 4],
+    pub m: [[CFloat; 4]; 4],
 }
 impl Clone for MATRIX {
     fn clone(&self) -> Self {
@@ -131,7 +147,7 @@ impl Clone for MATRIX {
 //pub type TCHAR = u16;
 
 pub type CFloat = f32;
-pub type CInt = c_int;
+pub type CInt = i32;
 pub type CLong = i64;
 pub type CDouble = f64;
 pub type CChar = c_char;

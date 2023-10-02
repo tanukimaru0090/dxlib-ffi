@@ -6,6 +6,7 @@ use std::ffi::CString;
 use std::os::raw::c_void;
 use std::os::raw::*;
 use std::vec::Vec;
+
 /// dxlib function extern declaration (based on Ver3.24b)
 /// see: https://dxlib.xsrv.jp/dxfunc.html
 #[link(name = "DxLib_x64")]
@@ -313,6 +314,34 @@ extern "stdcall" {
     pub fn dx_MScale(InM: MATRIX, Scale: CFloat) -> MATRIX;
     pub fn dx_MTranspose(InM: MATRIX) -> MATRIX;
     pub fn dx_MInverse(InM: MATRIX) -> MATRIX;
+
+    // 衝突検出系関数
+    pub fn dx_Segment_Segment_MinLength(
+        SegmentAPos1: VECTOR,
+        SegmentAPos2: VECTOR,
+        SegmentBPos1: VECTOR,
+        SegmentBPos2: VECTOR,
+    ) -> CFloat;
+    pub fn dx_Segment_Triangle_MinLength(
+        SegmentPos1: VECTOR,
+        SegmentPos2: VECTOR,
+        TrianglePos1: VECTOR,
+        TrianglePos2: VECTOR,
+        TrianglePos3: VECTOR,
+    ) -> CFloat;
+    pub fn dx_Segment_Point_MinLength(
+        SegmentPos1: VECTOR,
+        SegmentPos2: VECTOR,
+        PointPos: VECTOR,
+    ) -> CFloat;
+
+    pub fn dx_HitCheck_Line_Triangle(
+        LinePos1: VECTOR,
+        LinePos2: VECTOR,
+        TrianglePos1: VECTOR,
+        TrianglePos2: VECTOR,
+        TrianglePos3: VECTOR,
+    ) -> HITRESULT_LINE;
 
     // ３Ｄモデル関係の関数
 
