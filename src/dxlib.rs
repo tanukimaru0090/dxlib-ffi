@@ -1,4 +1,5 @@
 #![allow(non_snake_case)]
+pub use crate::c_encode::*;
 pub use crate::dxlib_common::*;
 use std::ffi::CStr;
 use std::ffi::CString;
@@ -6,7 +7,6 @@ use std::os::raw::c_char;
 use std::os::raw::c_void;
 use std::os::raw::*;
 use std::vec::Vec;
-pub use crate::c_encode::*;
 /// dxlib function extern declaration (based on Ver3.24b)
 /// see: https://dxlib.xsrv.jp/dxfunc.html
 #[link(name = "DxLib_x64")]
@@ -20,6 +20,35 @@ extern "stdcall" {
     pub fn dx_DxLib_End() -> c_int;
     /// ウインドウズのメッセージを処理する
     pub fn dx_ProcessMessage() -> c_int;
+
+    // Live2D 関係関数
+    pub fn dx_Live2D_SetCubism4CoreDLLPath(CoreDLLFilePath: *const c_char);
+    pub fn dx_Live2D_RenderBegin();
+    pub fn dx_Live2D_RenderEnd();
+    pub fn dx_Live2D_LoadModel(FilePath: *const c_char);
+    pub fn dx_Live2D_DeleteModel(Live2DModelHandle: c_int);
+    pub fn dx_Live2D_Model_Update(Live2DModelHandle: c_int, DeltaTimeSeconds: f32);
+    pub fn dx_Live2D_Model_Draw(Live2DModelHandle: c_int);
+    pub fn dx_Live2D_Model_SetTranslate(Live2DModelHandle: c_int, x: f32, y: f32) -> c_int;
+    pub fn dx_Live2D_Model_SetExtendRate(
+        Live2DModelHandle: c_int,
+        ExRateX: f32,
+        ExRateY: f32,
+    ) -> c_int;
+    pub fn dx_Live2D_Model_SetRotate(Live2DModelHandle: c_int, RotAngle: f32) -> c_int;
+    pub fn dx_Live2D_Model_StartMotion(
+        Live2DModelHandle: c_int,
+        group: *const c_char,
+        no: c_int,
+    ) -> c_int;
+
+    pub fn dx_Live2D_Model_IsMotionFinished(Live2DModelHandle: c_int) -> c_int;
+    pub fn dx_Live2D_Model_SetExpression(
+        Live2DModelHandle: c_int,
+        expressionID: *const c_char,
+    ) -> c_int;
+
+    // ３Ｄ関係関数
 
     //算術演算関数
     pub fn dx_VGet(x: f32, y: f32, z: f32) -> VECTOR;
@@ -54,67 +83,7 @@ extern "stdcall" {
     pub fn dx_MTranspose(InM: MATRIX) -> MATRIX;
     pub fn dx_MInverse(InM: MATRIX) -> MATRIX;
 
-    // Live2D 関係関数
-    pub fn dx_Live2D_SetCubism4CoreDLLPath(CoreDLLFilePath: *const c_char);
-    pub fn dx_Live2D_RenderBegin();
-    pub fn dx_Live2D_RenderEnd();
-    pub fn dx_Live2D_LoadModel(FilePath: *const c_char);
-    pub fn dx_Live2D_DeleteModel(Live2DModelHandle: c_int);
-    pub fn dx_Live2D_Model_Update(Live2DModelHandle: c_int, DeltaTimeSeconds: f32);
-    pub fn dx_Live2D_Model_Draw(Live2DModelHandle: c_int);
-    pub fn dx_Live2D_Model_SetTranslate(Live2DModelHandle: c_int, x: f32, y: f32) -> c_int;
-    pub fn dx_Live2D_Model_SetExtendRate(
-        Live2DModelHandle: c_int,
-        ExRateX: f32,
-        ExRateY: f32,
-    ) -> c_int;
-    pub fn dx_Live2D_Model_SetRotate(Live2DModelHandle: c_int, RotAngle: f32) -> c_int;
-    pub fn dx_Live2D_Model_StartMotion(
-        Live2DModelHandle: c_int,
-        group: *const c_char,
-        no: c_int,
-    ) -> c_int;
-
-    pub fn dx_Live2D_Model_IsMotionFinished(Live2DModelHandle: c_int) -> c_int;
-    pub fn dx_Live2D_Model_SetExpression(
-        Live2DModelHandle: c_int,
-        expressionID: *const c_char,
-    ) -> c_int;
-    // ３Ｄ関係関数
-    
-
-    pub fn dx_MV1SetShapeRate(MHandle:i32,ShapeIndex:i32, Rate:f32 )->i32 ;
-    pub fn dx_MV1DuplicateModel(SrcMHandle: c_int) -> c_int;
-    pub fn dx_MV1AttachAnim(
-        MHandle: c_int,
-        AnimIndex: c_int,
-        AnimSrcMHandle: c_int,
-        NameCheck: c_int,
-    ) -> c_int;
-    pub fn dx_MV1SetLoadModelPhysicsWorldGravity(Gravity: f32) -> c_int;
-    pub fn dx_MV1SetLoadModelUsePhysicsMode(PhysicsMode: c_int) -> c_int;
-    pub fn dx_MV1GetAnimNum(MHandle: c_int) -> c_int;
-    pub fn dx_MV1DetachAnim(MHandle: c_int, AttachIndex: c_int) -> c_int;
-    pub fn dx_MV1SetAttachAnimTime(MHandle: c_int, AttachIndex: c_int, Time: f32) -> c_int;
-    pub fn dx_MV1GetAttachAnimTotalTime(MHandle: c_int, AttachIndex: c_int) -> f32;
-    pub fn dx_MV1GetAttachAnimTime(MHandle: c_int, AttachIndex: c_int) -> f32;
-    pub fn dx_MV1SetAttachAnimBlendRate(MHandle: c_int, AttachIndex: c_int, Rate: f32) -> c_int;
-    pub fn dx_SetCameraPositionAndTarget_UpVecY(Position: VECTOR, Target: VECTOR) -> c_int;
-    pub fn dx_SetCameraNearFar(Near: f32, Far: f32) -> c_int;
-    // Zバッファを使うかどうかのフラグ
-    pub fn dx_SetUseZBuffer3D(Flag: c_int) -> c_int;
-    // Zバッファへの書き込みするかどうかのフラグ
-    pub fn dx_SetWriteZBuffer3D(Flag: c_int) -> c_int;
-
-    // モデルの読み込み
-    //pub fn dx_MV1LoadModel(FileName: *const c_char) -> c_int;
-    // モデルの描画
-    pub fn dx_MV1DrawModel(MHandle: c_int) -> c_int;
-    pub fn dx_MV1DeleteModel(MHandle: c_int) -> c_int;
-    //　モデルの位置の指定
-    pub fn dx_MV1SetPosition(MHandle: c_int, Position: VECTOR) -> c_int;
-    pub fn dx_MV1SetScale(MHandle: c_int, Scale: VECTOR) -> c_int;
-
+    //３Ｄ図形描画関係関数
     pub fn dx_DrawLine3D(Pos1: VECTOR, Pos2: VECTOR, Color: Color) -> c_int;
     pub fn dx_DrawTriangle3D(
         Pos1: VECTOR,
@@ -162,12 +131,108 @@ extern "stdcall" {
         GrHandle: c_int,
         TransFlag: c_int,
     ) -> c_int;
+    pub fn dx_DrawPolygonIndexed3D(
+        Vertex: *mut VERTEX3D,
+        VertexNum: i32,
+        Indices: *mut u16,
+        PolygonNum: i32,
+        GrHandle: i32,
+        TransFlag: i32,
+    ) -> i32;
     pub fn dx_DrawPolygon3D(
         Vertex: *mut VERTEX3D,
         PolygonNum: c_int,
         GrHandle: c_int,
         TransFlag: c_int,
     ) -> c_int;
+
+    pub fn dx_SetMaterialUseVertDifColor(UseFlag: i32) -> i32;
+    pub fn dx_SetMaterialUseVertSpcColor(UseFlag: i32) -> i32;
+    pub fn dx_SetMaterialParam(Material: MATERIALPARAM) -> i32;
+
+    // Zバッファを使うかどうかのフラグ
+    pub fn dx_SetUseZBuffer3D(Flag: c_int) -> c_int;
+    // Zバッファへの書き込みするかどうかのフラグ
+    pub fn dx_SetWriteZBuffer3D(Flag: c_int) -> c_int;
+    pub fn dx_SetUseBackCulling(Flag: i32) -> i32;
+    pub fn dx_SetTextureAddressModeUV(ModeU: i32, ModeV: i32) -> i32;
+    pub fn dx_SetFogEnable(Flag: i32) -> i32;
+    pub fn dx_SetFogColor(Red: i32, Green: i32, Blue: i32) -> i32;
+    pub fn dx_SetFogStartEnd(start: f32, end: f32) -> i32;
+    pub fn dx_GetColorF(Red: f32, Green: f32, Blue: f32, Alpha: f32) -> COLOR_F;
+    pub fn dx_GetColorU8(Red: i32, Green: i32, Blue: i32, Alpha: i32) -> COLOR_U8;
+
+    // ３Ｄモデル関係の関数
+
+    // モデルの読み込み・複製関係の関数
+
+    // モデルの読み込み
+    //pub fn dx_MV1LoadModel(FileName: *const c_char) -> c_int;
+    pub fn dx_MV1DuplicateModel(SrcMHandle: c_int) -> c_int;
+    pub fn dx_MV1DeleteModel(MHandle: c_int) -> c_int;
+    pub fn dx_MV1SetLoadModelUsePhysicsMode(PhysicsMode: c_int) -> c_int;
+    pub fn dx_MV1SetLoadModelPhysicsWorldGravity(Gravity: f32) -> c_int;
+
+    // モデル描画関数
+
+    // モデルの描画
+    pub fn dx_MV1DrawModel(MHandle: c_int) -> c_int;
+    pub fn dx_MV1DrawFrame(MHandle: c_int, FrameIndex: c_int) -> c_int;
+    pub fn dx_MV1DrawMesh(MHandle: c_int, MeshIndex: c_int) -> c_int;
+    pub fn dx_MV1DrawTriangleList(MHandle: c_int, TriangleListIndex: c_int) -> c_int;
+
+    // モデル描画設定関数
+    pub fn dx_MV1SetUseOrigShader(UseFlag: c_int) -> c_int;
+
+    // モデル基本制御関数
+
+    // モデルの位置の指定
+    pub fn dx_MV1SetPosition(MHandle: c_int, Position: VECTOR) -> c_int;
+
+    pub fn dx_MV1GetPosition(MHandle: c_int) -> VECTOR;
+    pub fn dx_MV1SetScale(MHandle: c_int, Scale: VECTOR) -> c_int;
+
+    pub fn dx_MV1GetScale(MHandle: c_int) -> VECTOR;
+
+    pub fn dx_MV1SetRotationXYZ(MHandle: c_int, Rotate: VECTOR) -> c_int;
+    pub fn dx_MV1GetRotationXYZ(MHandle: c_int) -> VECTOR;
+    pub fn dx_MV1SetRotationZYAxis(
+        MHandle: c_int,
+        ZAxis: VECTOR,
+        YAxis: VECTOR,
+        ZTwist: f32,
+    ) -> c_int;
+    pub fn dx_MV1SetMatrix(MHandle: c_int, Matrix: MATRIX) -> c_int;
+    pub fn dx_MV1GetMatrix(MHandle: c_int) -> MATRIX;
+    pub fn dx_MV1SetVisible(MHandle: c_int, VisibleFlag: c_int) -> c_int;
+    pub fn dx_MV1GetVisible(MHandle: c_int) -> c_int;
+    pub fn dx_MV1SetDifColorScale(MHandle: c_int, Scale: COLOR_F) -> c_int;
+
+    pub fn dx_MV1SetUseVertDifColor(MHandle: c_int, UseFlag: c_int) -> c_int;
+    pub fn dx_MV1SetUseVertSpcColor(MHandle: c_int, UseFlag: c_int) -> c_int;
+    pub fn dx_MV1PhysicsCalculation(MHandle: c_int, MillisecondTime: f32) -> c_int;
+
+    // アニメーション関数
+    pub fn dx_MV1AttachAnim(
+        MHandle: c_int,
+        AnimIndex: c_int,
+        AnimSrcMHandle: c_int,
+        NameCheck: c_int,
+    ) -> c_int;
+    pub fn dx_MV1GetAnimNum(MHandle: c_int) -> c_int;
+    pub fn dx_MV1DetachAnim(MHandle: c_int, AttachIndex: c_int) -> c_int;
+    pub fn dx_MV1SetAttachAnimTime(MHandle: c_int, AttachIndex: c_int, Time: f32) -> c_int;
+    pub fn dx_MV1GetAttachAnimTotalTime(MHandle: c_int, AttachIndex: c_int) -> f32;
+    pub fn dx_MV1GetAttachAnimTime(MHandle: c_int, AttachIndex: c_int) -> f32;
+    pub fn dx_MV1SetAttachAnimBlendRate(MHandle: c_int, AttachIndex: c_int, Rate: f32) -> c_int;
+
+    // シェイプ関数
+
+    pub fn dx_MV1SetShapeRate(MHandle: c_int, ShapeIndex: c_int, Rate: f32) -> c_int;
+
+    // カメラ関数
+    pub fn dx_SetCameraPositionAndTarget_UpVecY(Position: VECTOR, Target: VECTOR) -> c_int;
+    pub fn dx_SetCameraNearFar(Near: f32, Far: f32) -> c_int;
 
     // 図形描画関数
 
@@ -480,7 +545,6 @@ extern "stdcall" {
     pub fn dx_SetBackgroundColor(Red: c_int, Green: c_int, Blue: c_int) -> c_int;
     /// 色コードを取得する
     pub fn dx_GetColor(Red: c_int, Green: c_int, Blue: c_int) -> Color;
-    pub fn dx_GetColorU8(Red: c_int, Green: c_int, Blue: c_int, Alpha: c_int) -> COLOR_U8;
     /// 描画先グラフィック領域の指定
     pub fn dx_SetDrawScreen(DrawScreen: c_int) -> c_int;
     /// フリップ関数、画面の裏ページ(普段は表示されていない)の内容を表ページ(普段表示されている)に反映する

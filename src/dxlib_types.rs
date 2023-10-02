@@ -1,4 +1,5 @@
 /*dxlib struct types*/
+#![allow(non_snake_case)]
 use std::os::raw::*;
 #[repr(C)]
 pub struct RECT {
@@ -29,6 +30,27 @@ pub struct COLOR_U8 {
     pub r: u8,
     pub g: u8,
     pub b: u8,
+}
+#[repr(C)]
+pub struct COLOR_F {
+    pub a: f32,
+    pub r: f32,
+    pub g: f32,
+    pub b: f32,
+}
+
+#[repr(C)]
+pub struct MATERIALPARAM {
+    // ディフューズカラー
+    Diffuse: COLOR_F,
+    // アンビエントカラー
+    Ambient: COLOR_F,
+    // スペキュラカラー
+    Specular: COLOR_F,
+    // エミッシブカラー
+    Emissive: COLOR_F,
+    // スペキュラの強さ
+    Power: f32,
 }
 #[repr(C)]
 // ３Ｄ描画に使用する頂点データ型
