@@ -129,4 +129,10 @@ impl Clone for MATRIX {
     }
 }
 //pub type TCHAR = u16;
+
+pub type CFloat = f32;
+pub type CInt = c_int;
+pub type CLong = i64;
+pub type CDouble = f64;
+pub type CChar = c_char;
 pub type Color = u32;
