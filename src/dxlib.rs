@@ -113,21 +113,21 @@ extern "stdcall" {
         TransFlag: CInt,
     ) -> CInt;
 
-    pub fn dx_SetMaterialUseVertDifColor(UseFlag: CInt) -> i32;
-    pub fn dx_SetMaterialUseVertSpcColor(UseFlag: CInt) -> i32;
+    pub fn dx_SetMaterialUseVertDifColor(UseFlag: CInt) -> CInt;
+    pub fn dx_SetMaterialUseVertSpcColor(UseFlag: CInt) -> CInt;
     pub fn dx_SetMaterialParam(Material: MATERIALPARAM) -> CInt;
 
     // Zバッファを使うかどうかのフラグ
     pub fn dx_SetUseZBuffer3D(Flag: CInt) -> CInt;
     // Zバッファへの書き込みするかどうかのフラグ
     pub fn dx_SetWriteZBuffer3D(Flag: CInt) -> CInt;
-    pub fn dx_SetUseBackCulling(Flag: CInt) -> i32;
-    pub fn dx_SetTextureAddressModeUV(ModeU: CInt, ModeV: i32) -> i32;
-    pub fn dx_SetFogEnable(Flag: CInt) -> i32;
-    pub fn dx_SetFogColor(Red: CInt, Green: i32, Blue: i32) -> i32;
+    pub fn dx_SetUseBackCulling(Flag: CInt) -> CInt;
+    pub fn dx_SetTextureAddressModeUV(ModeU: CInt, ModeV: CInt) -> CInt;
+    pub fn dx_SetFogEnable(Flag: CInt) -> CInt;
+    pub fn dx_SetFogColor(Red: CInt, Green: CInt, Blue: CInt) -> CInt;
     pub fn dx_SetFogStartEnd(start: CFloat, end: CFloat) -> CInt;
     pub fn dx_GetColorF(Red: CFloat, Green: CFloat, Blue: CFloat, Alpha: CFloat) -> COLOR_F;
-    pub fn dx_GetColorU8(Red: CInt, Green: i32, Blue: i32, Alpha: i32) -> COLOR_U8;
+    pub fn dx_GetColorU8(Red: CInt, Green: CInt, Blue: CInt, Alpha: CInt) -> COLOR_U8;
 
     // カメラ関数
     pub fn dx_SetCameraPositionAndTarget_UpVecY(Position: VECTOR, Target: VECTOR) -> CInt;
@@ -156,7 +156,7 @@ extern "stdcall" {
     pub fn dx_GetCameraViewMatrix() -> MATRIX;
     pub fn dx_GetCameraProjectionMatrix() -> MATRIX;
     // ライト関数
-    pub fn dx_SetUseLighting(Flag: CInt) -> i32;
+    pub fn dx_SetUseLighting(Flag: CInt) -> CInt;
     pub fn dx_SetGlobalAmbientLight(Color: COLOR_F) -> CInt;
 
     //標準ライト関数
@@ -179,7 +179,7 @@ extern "stdcall" {
         Atten1: CFloat,
         Atten2: CFloat,
     ) -> CInt;
-    pub fn dx_SetLightEnable(EnableFlag: CInt) -> i32;
+    pub fn dx_SetLightEnable(EnableFlag: CInt) -> CInt;
     pub fn dx_SetLightDifColor(Color: COLOR_F) -> CInt;
 
     pub fn dx_SetLightSpcColor(Color: COLOR_F) -> CInt;
@@ -233,17 +233,17 @@ extern "stdcall" {
         Atten1: CFloat,
         Atten2: CFloat,
     ) -> CInt;
-    pub fn dx_DeleteLightHandle(LHandle: CInt) -> i32;
+    pub fn dx_DeleteLightHandle(LHandle: CInt) -> CInt;
 
     pub fn dx_DeleteLightHandleAll() -> CInt;
-    pub fn dx_SetLightTypeHandle(LHandle: CInt, LightType: i32) -> i32;
-    pub fn dx_SetLightEnableHandle(LHandle: CInt, EnableFlag: i32) -> i32;
-    pub fn dx_SetLightDifColorHandle(LHandle: CInt, Color: COLOR_F) -> i32;
-    pub fn dx_SetLightSpcColorHandle(LHandle: CInt, Color: COLOR_F) -> i32;
-    pub fn dx_SetLightAmbColorHandle(LHandle: CInt, Color: COLOR_F) -> i32;
-    pub fn dx_SetLightDirectionHandle(LHandle: CInt, Direction: VECTOR) -> i32;
+    pub fn dx_SetLightTypeHandle(LHandle: CInt, LightType: CInt) -> CInt;
+    pub fn dx_SetLightEnableHandle(LHandle: CInt, EnableFlag: CInt) -> CInt;
+    pub fn dx_SetLightDifColorHandle(LHandle: CInt, Color: COLOR_F) -> CInt;
+    pub fn dx_SetLightSpcColorHandle(LHandle: CInt, Color: COLOR_F) -> CInt;
+    pub fn dx_SetLightAmbColorHandle(LHandle: CInt, Color: COLOR_F) -> CInt;
+    pub fn dx_SetLightDirectionHandle(LHandle: CInt, Direction: VECTOR) -> CInt;
 
-    pub fn dx_SetLightPositionHandle(LHandle: CInt, Position: VECTOR) -> i32;
+    pub fn dx_SetLightPositionHandle(LHandle: CInt, Position: VECTOR) -> CInt;
 
     pub fn dx_SetLightRangeAttenHandle(
         LHandle: CInt,
@@ -253,10 +253,10 @@ extern "stdcall" {
         Atten2: CFloat,
     ) -> CInt;
 
-    pub fn dx_SetLightAngleHandle(LHandle: CInt, OutAngle: CFloat, InAngle: CFloat) -> i32;
-    pub fn dx_GetLightTypeHandle(LHandle: CInt) -> i32;
+    pub fn dx_SetLightAngleHandle(LHandle: CInt, OutAngle: CFloat, InAngle: CFloat) -> CInt;
+    pub fn dx_GetLightTypeHandle(LHandle: CInt) -> CInt;
 
-    pub fn dx_GetLightEnableHandle(LHandle: CInt) -> i32;
+    pub fn dx_GetLightEnableHandle(LHandle: CInt) -> CInt;
     pub fn dx_GetLightDifColorHandle(LHandle: CInt) -> COLOR_F;
     pub fn dx_GetLightSpcColorHandle(LHandle: CInt) -> COLOR_F;
     pub fn dx_GetLightAmbColorHandle(LHandle: CInt) -> COLOR_F;
@@ -277,10 +277,10 @@ extern "stdcall" {
         LHandle: CInt,
         OutAngle: *mut CFloat,
         InAngle: *mut CFloat,
-    ) -> i32;
+    ) -> CInt;
 
     pub fn dx_GetEnableLightHandleNum() -> CInt;
-    pub fn dx_GetEnableLightHandle(Index: CInt) -> i32;
+    pub fn dx_GetEnableLightHandle(Index: CInt) -> CInt;
 
     //算術演算関数
     pub fn dx_VGet(x: CFloat, y: CFloat, z: CFloat) -> VECTOR;
@@ -1164,47 +1164,80 @@ extern "stdcall" {
     //pub fn dx_GetCharBytes() -> CInt;
 
     // ツールバー
-    pub fn dx_SetDisplayMenuFlag(Flag: i32) -> i32; // メニューを表示するかどうかをセットする
+    pub fn dx_SetDisplayMenuFlag(Flag: CInt) -> CInt; // メニューを表示するかどうかをセットする
 
-    pub fn dx_GetDisplayMenuFlag() -> i32; // メニューを表示しているかどうかを取得する
+    pub fn dx_GetDisplayMenuFlag() -> CInt; // メニューを表示しているかどうかを取得する
 
-    pub fn dx_GetUseMenuFlag() -> i32; // メニューを使用しているかどうかを得る
+    pub fn dx_GetUseMenuFlag() -> CInt; // メニューを使用しているかどうかを得る
 
-    pub fn dx_SetAutoMenuDisplayFlag(Flag: i32) -> i32; // フルスクリーン時にメニューを自動で表示したり非表示にしたりするかどうかのフラグをセットする
+    pub fn dx_SetAutoMenuDisplayFlag(Flag: CInt) -> CInt; // フルスクリーン時にメニューを自動で表示したり非表示にしたりするかどうかのフラグをセットする
 
-    pub fn dx_AddToolBarButton(Type: i32, State: i32, ImageIndex: i32, ID: i32) -> i32; // ツールバーにボタンを追加する
-    pub fn dx_AddToolBarSep() -> i32; // ツールバーに隙間を追加する
+    pub fn dx_AddToolBarButton(Type: CInt, State: CInt, ImageIndex: CInt, ID: CInt) -> CInt; // ツールバーにボタンを追加する
+    pub fn dx_AddToolBarSep() -> CInt; // ツールバーに隙間を追加する
 
-    pub fn dx_GetToolBarButtonState(ID: i32) -> i32; // ツールバーのボタンの状態を取得する
+    pub fn dx_GetToolBarButtonState(ID: CInt) -> CInt; // ツールバーのボタンの状態を取得する
 
-    pub fn dx_SetToolBarButtonState(ID: i32, State: i32) -> i32; // ツールバーのボタンの状態を設定するpub fn dx_DeleteAllToolBarButton()->i32 ;// ツールバーのボタンを全て削除する
+    pub fn dx_SetToolBarButtonState(ID: CInt, State: CInt) -> CInt; // ツールバーのボタンの状態を設定するpub fn dx_DeleteAllToolBarButton()->CInt ;// ツールバーのボタンを全て削除する
 
     pub fn dx_AddMenuItem(
-        AddType: i32,
+        AddType: CInt,
         ItemName: *const CChar,
-        ItemID: i32,
-        SeparatorFlag: i32,
-        NewItemName: i32,
-        NewItemID: i32,
-    ) -> i32; // メニューに項目を追加する
+        ItemID: CInt,
+        SeparatorFlag: CInt,
+        NewItemName: CInt,
+        NewItemID: CInt,
+    ) -> CInt; // メニューに項目を追加する
 
-    pub fn dx_DeleteMenuItem(ItemName: *const CChar, ItemID: i32) -> i32; // メニューから選択項目を削除する
+    pub fn dx_DeleteMenuItem(ItemName: *const CChar, ItemID: CInt) -> CInt; // メニューから選択項目を削除する
 
-    pub fn dx_CheckMenuItemSelect(ItemName: *const CChar, ItemID: i32) -> i32; // メニューが選択されたかどうかを取得する
+    pub fn dx_CheckMenuItemSelect(ItemName: *const CChar, ItemID: CInt) -> CInt; // メニューが選択されたかどうかを取得する
 
-    pub fn dx_SetMenuItemEnable(ItemName: *const CChar, ItemID: i32, EnableFlag: i32) -> i32; // メニューの項目を選択出来るかどうかを設定する
-    pub fn dx_SetMenuItemMark(ItemName: *const CChar, ItemID: i32, Mark: i32) -> i32; // メニューの項目にチェックマークやラジオボタンを表示するかどうかを設定する
-    pub fn dx_SetUseMenuFlag(Flag: i32) -> i32; // メニューを有効にするかどうかを設定する
+    pub fn dx_SetMenuItemEnable(ItemName: *const CChar, ItemID: CInt, EnableFlag: CInt) -> CInt; // メニューの項目を選択出来るかどうかを設定する
+    pub fn dx_SetMenuItemMark(ItemName: *const CChar, ItemID: CInt, Mark: CInt) -> CInt; // メニューの項目にチェックマークやラジオボタンを表示するかどうかを設定する
+    pub fn dx_SetUseMenuFlag(Flag: CInt) -> CInt; // メニューを有効にするかどうかを設定する
 
-    pub fn dx_CheckMenuItemSelectAll() -> i32; // メニューの項目がどれか選択されたかどうかを取得する
+    pub fn dx_CheckMenuItemSelectAll() -> CInt; // メニューの項目がどれか選択されたかどうかを取得する
 
-    pub fn dx_AddMenuItem_Name(ParentItemName: *const CChar, NewItemName: *const CChar) -> i32; // メニューに選択項目を追加する
+    pub fn dx_AddMenuItem_Name(ParentItemName: *const CChar, NewItemName: *const CChar) -> CInt; // メニューに選択項目を追加する
 
-    pub fn dx_AddMenuLine_Name(ParentItemName: *const CChar) -> i32; // メニューのリストに区切り線を追加する
+    pub fn dx_AddMenuLine_Name(ParentItemName: *const CChar) -> CInt; // メニューのリストに区切り線を追加する
 
-    pub fn dx_InsertMenuItem_Name(ItemName: *const CChar, NewItemName: *const CChar) -> i32; // 指定の項目と、指定の項目の一つ上の項目との間に新しい項目を追加する
+    pub fn dx_InsertMenuItem_Name(ItemName: *const CChar, NewItemName: *const CChar) -> CInt; // 指定の項目と、指定の項目の一つ上の項目との間に新しい項目を追加する
 
-    pub fn dx_InsertMenuLine_Name(ItemName: *const CChar) -> i32; // 指定の項目と、指定の項目の一つ上の項目との間に区切り線を追加する
+    pub fn dx_InsertMenuLine_Name(ItemName: *const CChar) -> CInt; // 指定の項目と、指定の項目の一つ上の項目との間に区切り線を追加する
+
+    pub fn dx_DeleteMenuItem_Name(ItemName: *const CChar) -> CInt; // メニューから選択項目を削除する
+    pub fn dx_CheckMenuItemSelect_Name(ItemName: *const CChar) -> CInt; // メニューが選択されたかどうかを取得する
+
+    pub fn dx_SetMenuItemEnable_Name(ItemName: *const CChar, EnableFlag: CInt) -> CInt; // メニューの項目を選択出来るかどうかを設定する
+
+    pub fn dx_SetMenuItemMark_Name(ItemName: *const CChar, Mark: CInt) -> CInt; // メニューの項目にチェックマークやラジオボタンを表示するかどうかを設定する
+
+    pub fn dx_AddMenuItem_ID(ParentItemID: CInt, NewItemName: *const CChar, NewItemID: CInt) -> CInt; // メニューに選択項目を追加する
+
+    pub fn dx_AddMenuLine_ID(ParentItemID: CInt) -> CInt; // メニューのリストに区切り線を追加する
+
+    pub fn dx_InsertMenuItem_ID(ItemID: CInt, NewItemID: CInt) -> CInt; // 指定の項目と、指定の項目の一つ上の項目との間に新しい項目を追加する
+
+    pub fn dx_InsertMenuLine_ID(ItemID: CInt, NewItemID: CInt) -> CInt; // 指定の項目と、指定の項目の一つ上の項目との間に区切り線を追加する
+
+    pub fn dx_DeleteMenuItem_ID(ItemID: CInt) -> CInt; // メニューから選択項目を削除する
+
+    pub fn dx_CheckMenuItemSelect_ID(ItemID: CInt) -> CInt; // メニューが選択されたかどうかを取得する
+
+    pub fn dx_SetMenuItemEnable_ID(ItemID: CInt, EnableFlag: CInt) -> CInt; // メニューの項目を選択出来るかどうかを設定する
+
+    pub fn dx_SetMenuItemMark_ID(ItemID: CInt, Mark: CInt) -> CInt; // メニューの項目にチェックマークやラジオボタンを表示するかどうかを設定する
+
+    pub fn dx_DeleteMenuItemAll() -> CInt; // メニューの全ての選択項目を削除する
+
+    pub fn dx_ClearMenuItemSelect() -> CInt; // メニューが選択されたかどうかの情報をリセット
+
+    pub fn dx_GetMenuItemID(ItemName: CInt) -> CInt; // メニューの項目名から項目識別番号を取得する
+
+    pub fn dx_GetMenuItemName(ItemID: CInt, NameBuffer: *mut CChar) -> CInt; // メニューの項目識別番号から項目名を取得する
+
+    pub fn dx_LoadMenuResource(MenuResourceID: CInt) -> CInt; // メニューをリソースから読み込む
 
     // クリップボード
 
