@@ -1163,14 +1163,54 @@ extern "stdcall" {
     /// 文字列の先頭の文字のバイト数を取得する
     //pub fn dx_GetCharBytes() -> CInt;
 
+    // ツールバー
+    pub fn dx_SetDisplayMenuFlag(Flag: i32) -> i32; // メニューを表示するかどうかをセットする
+
+    pub fn dx_GetDisplayMenuFlag() -> i32; // メニューを表示しているかどうかを取得する
+
+    pub fn dx_GetUseMenuFlag() -> i32; // メニューを使用しているかどうかを得る
+
+    pub fn dx_SetAutoMenuDisplayFlag(Flag: i32) -> i32; // フルスクリーン時にメニューを自動で表示したり非表示にしたりするかどうかのフラグをセットする
+
+    pub fn dx_AddToolBarButton(Type: i32, State: i32, ImageIndex: i32, ID: i32) -> i32; // ツールバーにボタンを追加する
+    pub fn dx_AddToolBarSep() -> i32; // ツールバーに隙間を追加する
+
+    pub fn dx_GetToolBarButtonState(ID: i32) -> i32; // ツールバーのボタンの状態を取得する
+
+    pub fn dx_SetToolBarButtonState(ID: i32, State: i32) -> i32; // ツールバーのボタンの状態を設定するpub fn dx_DeleteAllToolBarButton()->i32 ;// ツールバーのボタンを全て削除する
+
+    pub fn dx_AddMenuItem(
+        AddType: i32,
+        ItemName: *const CChar,
+        ItemID: i32,
+        SeparatorFlag: i32,
+        NewItemName: i32,
+        NewItemID: i32,
+    ) -> i32; // メニューに項目を追加する
+
+    pub fn dx_DeleteMenuItem(ItemName: *const CChar, ItemID: i32) -> i32; // メニューから選択項目を削除する
+
+    pub fn dx_CheckMenuItemSelect(ItemName: *const CChar, ItemID: i32) -> i32; // メニューが選択されたかどうかを取得する
+
+    pub fn dx_SetMenuItemEnable(ItemName: *const CChar, ItemID: i32, EnableFlag: i32) -> i32; // メニューの項目を選択出来るかどうかを設定する
+    pub fn dx_SetMenuItemMark(ItemName: *const CChar, ItemID: i32, Mark: i32) -> i32; // メニューの項目にチェックマークやラジオボタンを表示するかどうかを設定する
+    pub fn dx_SetUseMenuFlag(Flag: i32) -> i32; // メニューを有効にするかどうかを設定する
+
+    pub fn dx_CheckMenuItemSelectAll() -> i32; // メニューの項目がどれか選択されたかどうかを取得する
+
+    pub fn dx_AddMenuItem_Name(ParentItemName: *const CChar, NewItemName: *const CChar) -> i32; // メニューに選択項目を追加する
+
+    pub fn dx_AddMenuLine_Name(ParentItemName: *const CChar) -> i32; // メニューのリストに区切り線を追加する
+
+    pub fn dx_InsertMenuItem_Name(ItemName: *const CChar, NewItemName: *const CChar) -> i32; // 指定の項目と、指定の項目の一つ上の項目との間に新しい項目を追加する
+
+    pub fn dx_InsertMenuLine_Name(ItemName: *const CChar) -> i32; // 指定の項目と、指定の項目の一つ上の項目との間に区切り線を追加する
+
     // クリップボード
 
-
     // クリップボードに格納されているテキストデータを読み出す
-    pub fn dx_GetClipboardText( DestBuffer:*mut CChar )->CInt ;
-    pub fn dx_SetClipboardText( Text:*const CChar )->CInt ;// クリップボードにテキストデータを格納する
-
-
+    pub fn dx_GetClipboardText(DestBuffer: *mut CChar) -> CInt;
+    pub fn dx_SetClipboardText(Text: *const CChar) -> CInt; // クリップボードにテキストデータを格納する
 
     // ログ関係
     pub fn dx_ErrorLogAdd(ErrorStr: *const CChar) -> CInt; // ログファイル( Log.txt ) に文字列を出力する
@@ -1612,8 +1652,8 @@ pub fn dx_LoadXRGB8ColorSoftImage(FileName: &str) -> CInt {
         return hidden::dx_LoadXRGB8ColorSoftImage(FileName.to_cstring().as_ptr());
     }
 }
-pub fn dx_FileRead_open(FilePath: &str, ASync: CInt) -> CInt{
-    unsafe{
-        return hidden::dx_FileRead_open(FilePath.to_cstring().as_ptr(),ASync);
+pub fn dx_FileRead_open(FilePath: &str, ASync: CInt) -> CInt {
+    unsafe {
+        return hidden::dx_FileRead_open(FilePath.to_cstring().as_ptr(), ASync);
     }
 }
