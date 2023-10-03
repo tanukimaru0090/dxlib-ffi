@@ -1612,3 +1612,8 @@ pub fn dx_LoadXRGB8ColorSoftImage(FileName: &str) -> CInt {
         return hidden::dx_LoadXRGB8ColorSoftImage(FileName.to_cstring().as_ptr());
     }
 }
+pub fn dx_FileRead_open(FilePath: &str, ASync: CInt) -> CInt{
+    unsafe{
+        return hidden::dx_FileRead_open(FilePath.to_cstring().as_ptr(),ASync);
+    }
+}
