@@ -1088,7 +1088,7 @@ extern "stdcall" {
     /// ファイルポインタの位置を変更する
     //pub fn dx_FileRead_seek() -> CInt;
     /// ファイルからデータを読み込む
-    //pub fn dx_FileRead_read(Buffer: *mut c_void, ReadSize: CInt, FileHandle: CInt) -> CInt;
+    pub fn dx_FileRead_read(Buffer: *mut c_void, ReadSize: CInt, FileHandle: CInt) -> CInt;
     /// ファイルの終端かどうかを調べる
     pub fn dx_FileRead_eof(FileHandle: CInt) -> CInt;
     /// ファイルから一行読み出す
