@@ -1184,7 +1184,7 @@ extern "stdcall" {
         ItemName: *const CChar,
         ItemID: CInt,
         SeparatorFlag: CInt,
-        NewItemName: CInt,
+        NewItemName: *const CChar,
         NewItemID: CInt,
     ) -> CInt; // メニューに項目を追加する
 
