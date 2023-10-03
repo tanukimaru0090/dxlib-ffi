@@ -1163,9 +1163,19 @@ extern "stdcall" {
     /// 文字列の先頭の文字のバイト数を取得する
     //pub fn dx_GetCharBytes() -> CInt;
 
+    // クリップボード
+
+
+    // クリップボードに格納されているテキストデータを読み出す
+    pub fn dx_GetClipboardText( DestBuffer:*mut CChar )->CInt ;
+    pub fn dx_SetClipboardText( Text:*const CChar )->CInt ;// クリップボードにテキストデータを格納する
+
+
+
     // ログ関係
     pub fn dx_ErrorLogAdd(ErrorStr: *const CChar) -> CInt; // ログファイル( Log.txt ) に文字列を出力する
-                                                           // マイナー関数
+
+    // マイナー関数
     pub fn dx_SetUseBackBufferTransColorFlag(Flag: CInt) -> CInt;
     /// ウインドウがアクティブではない状態でも処理を続行するか、フラグをセットする
     pub fn dx_SetAlwaysRunFlag(Flag: CInt) -> CInt;
