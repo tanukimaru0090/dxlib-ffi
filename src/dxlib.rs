@@ -1164,6 +1164,7 @@ extern "stdcall" {
     //pub fn dx_GetCharBytes() -> CInt;
 
     // ツールバー
+    pub fn dx_ToolBarDraw()->CInt;    
     pub fn dx_SetDisplayMenuFlag(Flag: CInt) -> CInt; // メニューを表示するかどうかをセットする
 
     pub fn dx_GetDisplayMenuFlag() -> CInt; // メニューを表示しているかどうかを取得する
