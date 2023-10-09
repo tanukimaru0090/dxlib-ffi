@@ -988,7 +988,7 @@ extern "stdcall" {
     //pub fn dx_Set3DSoundListenerVelocity() -> CInt;
 
     // 音楽再生関数
-    pub fn dx_LoadMusicMem(FileName: *const CChar)->CInt;
+    //pub fn dx_LoadMusicMem(FileName: *const CChar)->CInt;
     pub fn dx_PlayMusicMem(MusicHandle:CInt,PlayType: CInt,TopPositionFlag: CInt)->CInt;
     /// ＭＩＤＩ又はＭＰ３ファイルを演奏(再生)する
     //pub fn dx_PlayMusic(FileName:*const CChar ,PlayType:CInt) -> CInt;
@@ -1338,6 +1338,7 @@ mod hidden {
         pub fn dx_PlaySoundFile(FileName: *const CChar, PlayType: CInt) -> CInt;
         pub fn dx_LoadSoundMem(FileName: *const CChar) -> CInt;
         pub fn dx_DrawString(x: CInt, y: CInt, String: *const CChar, Color: Color) -> CInt;
+        pub fn dx_LoadMusicMem(FileName: *const CChar)->CInt;
         pub fn dx_MV1LoadModel(FileName: *const CChar) -> CInt;
         pub fn dx_ChangeFont(FileName: *const CChar) -> CInt;
         pub fn dx_CreateFontToHandle(
@@ -1689,5 +1690,10 @@ pub fn dx_LoadXRGB8ColorSoftImage(FileName: &str) -> CInt {
 pub fn dx_FileRead_open(FilePath: &str, ASync: CInt) -> CInt {
     unsafe {
         return hidden::dx_FileRead_open(FilePath.to_cstring().as_ptr(), ASync);
+    }
+}
+pub fn dx_LoadMusicMem(FileName: &str)->CInt{
+    unsafe{
+        return hidden::dx_LoadMusicMem(FileName.to_cstring().as_ptr());
     }
 }
