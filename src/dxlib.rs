@@ -990,6 +990,7 @@ extern "stdcall" {
     // 音楽再生関数
     //pub fn dx_LoadMusicMem(FileName: *const CChar)->CInt;
     pub fn dx_PlayMusicMem(MusicHandle:CInt,PlayType: CInt,TopPositionFlag: CInt)->CInt;
+    pub fn dx_DeleteMusicMem(MusicHandle:CInt)->i32;
     /// ＭＩＤＩ又はＭＰ３ファイルを演奏(再生)する
     //pub fn dx_PlayMusic(FileName:*const CChar ,PlayType:CInt) -> CInt;
     /// ＭＩＤＩ又はＭＰ３ファイルが演奏(再生)中かの情報を取得する
