@@ -988,7 +988,8 @@ extern "stdcall" {
     //pub fn dx_Set3DSoundListenerVelocity() -> CInt;
 
     // 音楽再生関数
-
+    pub fn dx_LoadMusicMem(FileName: *const CChar)->CInt;
+    pub fn dx_PlayMusicMem(MusicHandle:CInt,PlayType: CInt,TopPositionFlag: CInt)->CInt;
     /// ＭＩＤＩ又はＭＰ３ファイルを演奏(再生)する
     //pub fn dx_PlayMusic(FileName:*const CChar ,PlayType:CInt) -> CInt;
     /// ＭＩＤＩ又はＭＰ３ファイルが演奏(再生)中かの情報を取得する
@@ -1163,8 +1164,7 @@ extern "stdcall" {
     /// 文字列の先頭の文字のバイト数を取得する
     //pub fn dx_GetCharBytes() -> CInt;
 
-    // ツールバー
-    pub fn dx_ToolBarDraw()->CInt;    
+    // ツールバー    
     pub fn dx_SetDisplayMenuFlag(Flag: CInt) -> CInt; // メニューを表示するかどうかをセットする
 
     pub fn dx_GetDisplayMenuFlag() -> CInt; // メニューを表示しているかどうかを取得する
