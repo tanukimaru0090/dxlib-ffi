@@ -1251,6 +1251,9 @@ extern "stdcall" {
     pub fn dx_ErrorLogAdd(ErrorStr: *const CChar) -> CInt; // ログファイル( Log.txt ) に文字列を出力する
 
     // マイナー関数
+    pub fn dx_SetWindowUserCloseEnableFlag(Flag:CInt)->CInt;
+
+    pub fn dx_GetWindowUserCloseFlag(StateResetFlag:CInt)->CInt;
     pub fn dx_SetUseBackBufferTransColorFlag(Flag: CInt) -> CInt;
     /// ウインドウがアクティブではない状態でも処理を続行するか、フラグをセットする
     pub fn dx_SetAlwaysRunFlag(Flag: CInt) -> CInt;
