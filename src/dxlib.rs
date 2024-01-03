@@ -22,13 +22,13 @@ extern "stdcall" {
     pub fn dx_ProcessMessage() -> CInt;
 
     // Live2D 関係関数
-    pub fn dx_Live2D_SetCubism4CoreDLLPath(CoreDLLFilePath: *mut CChar);
-    pub fn dx_Live2D_RenderBegin();
-    pub fn dx_Live2D_RenderEnd();
-    pub fn dx_Live2D_LoadModel(FilePath: *const CChar);
-    pub fn dx_Live2D_DeleteModel(Live2DModelHandle: CInt);
-    pub fn dx_Live2D_Model_Update(Live2DModelHandle: CInt, DeltaTimeSeconds: CFloat);
-    pub fn dx_Live2D_Model_Draw(Live2DModelHandle: CInt);
+    pub fn dx_Live2D_SetCubism4CoreDLLPath(CoreDLLFilePath: *const CChar)->CInt;
+    pub fn dx_Live2D_RenderBegin()->CInt;
+    pub fn dx_Live2D_RenderEnd()->CInt;
+    pub fn dx_Live2D_LoadModel(FilePath: *const CChar)->CInt;
+    pub fn dx_Live2D_DeleteModel(Live2DModelHandle: CInt)->CInt;
+    pub fn dx_Live2D_Model_Update(Live2DModelHandle: CInt, DeltaTimeSeconds: CFloat)->CInt;
+    pub fn dx_Live2D_Model_Draw(Live2DModelHandle: CInt)->CInt;
     pub fn dx_Live2D_Model_SetTranslate(Live2DModelHandle: CInt, x: CFloat, y: CFloat) -> CInt;
     pub fn dx_Live2D_Model_SetExtendRate(
         Live2DModelHandle: CInt,
