@@ -22,7 +22,7 @@ extern "stdcall" {
     pub fn dx_ProcessMessage() -> CInt;
 
     // Live2D 関係関数
-    pub fn dx_Live2D_SetCubism4CoreDLLPath(CoreDLLFilePath: *const CChar);
+    pub fn dx_Live2D_SetCubism4CoreDLLPath(CoreDLLFilePath: *mut CChar);
     pub fn dx_Live2D_RenderBegin();
     pub fn dx_Live2D_RenderEnd();
     pub fn dx_Live2D_LoadModel(FilePath: *const CChar);
